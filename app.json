@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "gerenciador-de-reservas-flet",
-    "slug": "gerenciador-de-reservas-flet",
+    "name": "gerenciador-de-reservas",
+    "slug": "gerenciador-de-reservas",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "gerenciadordereservasflet",
+    "scheme": "gerenciadordereservas",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
