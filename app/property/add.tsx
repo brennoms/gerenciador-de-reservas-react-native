@@ -12,7 +12,12 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 
+import { useProperty } from "@/contexts/property/PropertyHook";
+
+
 export default function AddProperty() {
+
+  const {addProperty} = useProperty();
 
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
@@ -44,7 +49,7 @@ export default function AddProperty() {
     }
 
     const property = { name, address, image };
-    console.log(property);
+    addProperty(property);
 
     Alert.alert("Imóvel cadastrado!");
     router.back()

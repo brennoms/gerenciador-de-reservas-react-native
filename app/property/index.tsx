@@ -4,16 +4,10 @@ import { router } from "expo-router";
 
 import ItemList from "@/components/ItemList";
 import PropertyCard from "@/components/PropertyCard";
+import { useProperty } from "@/contexts/property/PropertyHook";
 
 export default function Propperty() {
-  const [properties, setProperties] = useState([
-    {
-      id: "1",
-      image: "https://picsum.photos/400/200",
-      name: "Casa de Praia",
-      address: "Rio de Janeiro",
-    },
-  ]);
+  const {properties} = useProperty();
 
   const addPropertyCard = () => {
     router.navigate({ pathname: '/property/add'});
