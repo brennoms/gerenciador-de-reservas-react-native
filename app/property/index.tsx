@@ -1,9 +1,11 @@
 import { View } from "react-native";
 import { useState } from "react";
+import { router } from "expo-router";
+
 import ItemList from "@/components/ItemList";
 import PropertyCard from "@/components/PropertyCard";
 
-export default function Home() {
+export default function Propperty() {
   const [properties, setProperties] = useState([
     {
       id: "1",
@@ -14,15 +16,7 @@ export default function Home() {
   ]);
 
   const addPropertyCard = () => {
-    setProperties([
-      ...properties,
-      {
-        id: Date.now().toString(),
-        image: "https://picsum.photos/401/200",
-        name: "Nova Casa",
-        address: "Copacabana",
-      },
-    ]);
+    router.navigate({ pathname: '/property/add'});
   };
 
   return (
