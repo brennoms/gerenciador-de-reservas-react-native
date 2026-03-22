@@ -20,12 +20,12 @@ export default function ItemList<T>({ items, renderItem, onAdd }: ItemListProps<
         renderItem={({ item }) => renderItem(item)}
       />
 
-        <TouchableOpacity
-          onPress={onAdd}
-          className="absolute bottom-6 right-6 w-16 h-16 bg-blue-500 rounded-full justify-center items-center shadow-xl elevation-5"
-        >
-          <Text className="text-white text-3xl font-bold"> + </Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        onPress={onAdd}
+        className="absolute bottom-6 right-6 w-16 h-16 bg-blue-500 rounded-full justify-center items-center shadow-xl elevation-5"
+      >
+        <Text className="text-white text-3xl font-bold"> + </Text>
+      </TouchableOpacity>
 
     </View>
 
