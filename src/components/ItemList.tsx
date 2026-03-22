@@ -14,7 +14,6 @@ export default function ItemList<T>({ items, renderItem, onAdd }: ItemListProps<
     <View className="flex-1">
 
       <FlatList
-      className="z-2"
         data={items}
         keyExtractor={(item: any) => item.id}
         renderItem={({ item }) => renderItem(item)}
