@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { PropertyProvider } from "@/contexts/property/PropertyProvider";
+import { PropertyProvider } from "@/src/contexts/property/PropertyProvider";
 
 export default function RootLayout() {
   return (

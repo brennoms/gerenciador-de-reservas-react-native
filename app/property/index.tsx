@@ -2,9 +2,9 @@ import { View } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 
-import ItemList from "@/components/ItemList";
-import PropertyCard from "@/components/PropertyCard";
-import { useProperty } from "@/contexts/property/PropertyHook";
+import ItemList from "@/src/components/ItemList";
+import PropertyCard from "@/src/components/PropertyCard";
+import { useProperty } from "@/src/contexts/property/PropertyHook";
 
 export default function Propperty() {
   const {properties} = useProperty();

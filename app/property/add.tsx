@@ -12,7 +12,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 
-import { useProperty } from "@/contexts/property/PropertyHook";
+import { useProperty } from "@/src/contexts/property/PropertyHook";
 
 
 export default function AddProperty() {
