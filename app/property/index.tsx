@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { useState } from "react";
 import { router } from "expo-router";
 
 import ItemList from "@/src/components/ItemList";
@@ -21,6 +20,7 @@ export default function Propperty() {
         onAdd={addPropertyCard}
         renderItem={(item) => (
           <PropertyCard
+            id={item.id}
             image={item.image}
             name={item.name}
             address={item.address}

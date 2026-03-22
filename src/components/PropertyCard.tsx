@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 
 import { PropertyProps } from "../types/property.types";
 
-export default function PropertyCard({ image, name, address }: PropertyProps) {
+export default function PropertyCard({ id, image, name, address }: PropertyProps) {
   return (
     <View className="bg-white rounded-xl mb-4 overflow-hidden">
 
