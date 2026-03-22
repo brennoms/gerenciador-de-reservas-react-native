@@ -1,10 +1,14 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 import { PropertyProps } from "../types/property.types";
 
-export default function PropertyCard({ id, image, name, address }: PropertyProps) {
+
+export default function PropertyCard({ id, image, name, address, onClick }: PropertyProps & { onClick: () => void }) {
   return (
-    <View className="bg-white rounded-xl mb-4 overflow-hidden">
+    <TouchableOpacity 
+      className="bg-white rounded-xl mb-4 overflow-hidden"
+      onPress={onClick}
+    >
 
       <Image
         source={{ uri: image }}
@@ -16,6 +20,6 @@ export default function PropertyCard({ id, image, name, address }: PropertyProps
         <Text className="text-gray-500">{address}</Text>
       </View>
 
-    </View>
+    </TouchableOpacity>
   );
 }
