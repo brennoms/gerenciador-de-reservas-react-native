@@ -8,6 +8,7 @@ import axios from "axios"; // for tests, we will fetch some images from the inte
 export function PropertyProvider({ children }: { children: ReactNode }) {
 
   const [properties, setProperties] = useState<PropertyProps[]>([]);
+  const [propertySelected, setPropertySelected] = useState<PropertyProps | null>(null);
 
   // for tests, we will fetch some images from the internet and create some properties with them
   useEffect(() =>{
@@ -41,8 +42,17 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     ]);
   };
 
+  const selectProperty = (id: number) => {
+    const property = properties.find(p => p.id === id);
+
+    if(property) {
+      setPropertySelected(property);
+    }
+
+  }
+
   return (
-    <PropertyContext.Provider value={{ properties, addProperty }}>
+    <PropertyContext.Provider value={{ properties, addProperty, propertySelected, selectProperty }}>
       {children}
     </PropertyContext.Provider>
   );

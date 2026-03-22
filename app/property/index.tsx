@@ -6,14 +6,19 @@ import PropertyCard from "@/src/components/PropertyCard";
 import { useProperty } from "@/src/contexts/property/PropertyHook";
 
 export default function Propperty() {
-  const {properties} = useProperty();
+  const {properties, selectProperty} = useProperty();
 
   const addPropertyCard = () => {
     router.navigate({ pathname: '/property/add'});
   };
 
+  const onClickPropertyCard = (id: number) => {
+    selectProperty(id);
+    router.navigate({ pathname: `/property/[id]`, params: { id } });
+  }
+
   return (
-    <View className="flex-1 p-4 bg-gray-100">
+    <View className="flex-1 px-4 bg-gray-100">
 
       <ItemList
         items={properties}
@@ -24,6 +29,7 @@ export default function Propperty() {
             image={item.image}
             name={item.name}
             address={item.address}
+            onClick={() => onClickPropertyCard(item.id)}
           />
         )}
       />
