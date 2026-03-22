@@ -1,5 +1,6 @@
 import { View, FlatList, TouchableOpacity, Text } from "react-native";
 import { ReactElement } from "react";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 type ItemListProps<T> = {
   items: T[];
@@ -22,9 +23,9 @@ export default function ItemList<T>({ items, renderItem, onAdd, className }: Ite
 
       <TouchableOpacity
         onPress={onAdd}
-        className="absolute bottom-6 right-6 w-16 h-16 bg-blue-500 rounded-full justify-center items-center shadow-xl elevation-5"
+        className="absolute bottom-6 right-6 w-min h-min rounded-full bg-blue-100"
       >
-        <Text className="text-white text-3xl font-bold"> + </Text>
+        <Ionicons name="add-circle" size={64} color="blue" />
       </TouchableOpacity>
 
     </View>
