@@ -11,7 +11,7 @@ export default function ItemList<T>({ items, renderItem, onAdd, className }: Ite
 
   return (
 
-    <View className={`flex-1 ${className}`}>
+    <View className={className ? className : "flex-1"}>
 
       <FlatList
         data={items}

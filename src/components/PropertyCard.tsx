@@ -3,10 +3,10 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { PropertyProps } from "../types/property.types";
 
 
-export default function PropertyCard({ id, image, name, address, onClick }: PropertyProps & { onClick: () => void }) {
+export default function PropertyCard({ id, image, name, address, onClick, className }: PropertyProps & { onClick: () => void; className?: string }) {
   return (
     <TouchableOpacity 
-      className="bg-white rounded-xl mb-4 overflow-hidden"
+      className={className ? className : "bg-white rounded-xl mb-4 overflow-hidden"}
       onPress={onClick}
     >
 
