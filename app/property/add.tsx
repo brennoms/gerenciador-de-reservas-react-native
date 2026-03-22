@@ -69,9 +69,7 @@ export default function AddProperty() {
         {image ? (
           <Image
             source={{ uri: image }}
-            className="w-full"
-            style={{ aspectRatio: 16 / 9 }}
-            resizeMode="contain"
+            className="w-full aspect-[1.5]"
           />
         ) : (
           <Text className="text-gray-500">

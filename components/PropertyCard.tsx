@@ -12,7 +12,7 @@ export default function PropertyCard({ image, name, address }: PropertyProps) {
 
       <Image
         source={{ uri: image }}
-        className="w-full h-40"
+        className="w-full aspect-[1.5]"
       />
 
       <View className="p-4">
