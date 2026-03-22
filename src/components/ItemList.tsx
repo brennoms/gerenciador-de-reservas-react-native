@@ -11,9 +11,10 @@ export default function ItemList<T>({ items, renderItem, onAdd, className }: Ite
 
   return (
 
-    <View className={className ? className : "flex-1"}>
+    <View className="flex-1">
 
       <FlatList
+        className={className ? className : ""}
         data={items}
         keyExtractor={(item: any) => item.id}
         renderItem={({ item }) => renderItem(item)}

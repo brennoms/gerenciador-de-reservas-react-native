@@ -18,9 +18,10 @@ export default function Propperty() {
   }
 
   return (
-    <View className="flex-1 px-4 bg-gray-100">
+    <View className="flex-1 p-4 bg-gray-100">
 
       <ItemList
+        className="rounded-lg"
         items={properties}
         onAdd={addPropertyCard}
         renderItem={(item) => (
