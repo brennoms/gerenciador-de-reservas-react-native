@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { Link } from "expo-router";
 
 const linkclass: string = "text-blue-500 text-center mb-2 text-4xl"
