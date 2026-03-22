@@ -7,11 +7,11 @@ type ItemListProps<T> = {
   onAdd: () => void;
 };
 
-export default function ItemList<T>({ items, renderItem, onAdd }: ItemListProps<T>) {
+export default function ItemList<T>({ items, renderItem, onAdd, className }: ItemListProps<T> & { className?: string }) {
 
   return (
 
-    <View className="flex-1">
+    <View className={`flex-1 ${className}`}>
 
       <FlatList
         data={items}
