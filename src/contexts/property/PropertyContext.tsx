@@ -1,3 +1,9 @@
 import { createContext } from "react";
+import { PropertyProps, AddPropertyProps } from "../../types/property.types";
 
-export const PropertyContext = createContext(null);
+type PropertyContextType = {
+  properties: PropertyProps[];
+  addProperty: (props: AddPropertyProps) => void;
+};
+
+export const PropertyContext = createContext<PropertyContextType | null>(null);

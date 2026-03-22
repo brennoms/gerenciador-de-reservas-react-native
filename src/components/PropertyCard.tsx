@@ -1,10 +1,6 @@
 import { View, Text, Image } from "react-native";
 
-type PropertyProps = {
-  image: string;
-  name: string;
-  address: string;
-};
+import { PropertyProps } from "../types/property.types";
 
 export default function PropertyCard({ image, name, address }: PropertyProps) {
   return (

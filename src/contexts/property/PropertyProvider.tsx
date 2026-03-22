@@ -1,25 +1,27 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { PropertyContext } from "./PropertyContext";
+import { PropertyProps, AddPropertyProps } from "../../types/property.types";
 
-export function PropertyProvider({ children }) {
+export function PropertyProvider({ children }: { children: ReactNode }) {
 
-  const [properties, setProperties] = useState([
-      {
-        id: "1",
-        image: "https://picsum.photos/400/200",
-        name: "Casa de Praia",
-        address: "Rio de Janeiro",
-      },
-    ]);
-  const addProperty = ({ image, name, address }) => {
+  const [properties, setProperties] = useState<PropertyProps[]>([
+    {
+      id: 1,
+      image: "https://picsum.photos/400/200",
+      name: "Casa de Praia",
+      address: "Rio de Janeiro",
+    },
+  ]);
+
+  const addProperty = ({ image, name, address }: AddPropertyProps) => {
     setProperties(prev => [
       ...prev,
       {
-        id: String(prev.length + 1),
+        id: prev.length + 1,
         image,
         name,
-        address
-      }
+        address,
+      },
     ]);
   };
 
