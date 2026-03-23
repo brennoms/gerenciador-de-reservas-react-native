@@ -56,7 +56,7 @@ export default function AddProperty() {
   };
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-100 p-5">
       <Text className="text-2xl font-bold mb-5">
         Adicionar Imóvel
       </Text>
