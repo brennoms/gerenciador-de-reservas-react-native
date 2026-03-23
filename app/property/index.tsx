@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { router } from "expo-router";
 
 import ItemList from "@/src/components/ItemList";
@@ -19,6 +19,8 @@ export default function Propperty() {
 
   return (
     <View className="flex-1 p-4 bg-gray-100">
+
+      <Text className="text-center mb-4 text-4xl">Propriedades</Text>
 
       <ItemList
         className="rounded-lg"

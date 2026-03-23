@@ -1,17 +1,18 @@
 import { Stack } from "expo-router";
-import { PropertyProvider } from "@/src/contexts/property/PropertyProvider";
 
-import { usePublic } from "@/src/contexts/public/PublicHook";
+import { PropertyProvider } from "@/src/contexts/property/PropertyProvider";
 import { AuthProvider } from "@/src/contexts/auth/AuthProvider";
 
 export default function RootLayout() {
 
-  const { email, pass } = usePublic()
-
   return (
-      <AuthProvider email={email} pass={pass}>
+      <AuthProvider>
         <PropertyProvider>
-          <Stack />
+          <Stack
+            screenOptions={{
+              headerShown: false
+            }} 
+          />
         </PropertyProvider>
       </AuthProvider>
     )

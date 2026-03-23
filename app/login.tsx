@@ -12,6 +12,7 @@ export default function LoginScreen() {
 
     if (login) {
     	router.navigate({pathname: "/property"});
+    	return;
     }
 
     console.log("falha no login");

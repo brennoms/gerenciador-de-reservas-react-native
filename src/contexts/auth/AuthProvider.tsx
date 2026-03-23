@@ -4,11 +4,13 @@ import { router } from "expo-router";
 import { AuthContext } from "./AuthContext";
 import { LoginResponse, UserLogin, UserProps } from "@/src/types/user.types";
 import { loginService, getUserService } from "@/src/services/users";
+import { usePublic } from "../public/PublicHook";
 
-export function AuthProvider({ children, email, pass }:  {children: ReactNode} & UserLogin) {
+export function AuthProvider({ children }:  {children: ReactNode}) {
 
   const [user, setUser] = useState<UserProps | null>(null);
   const [token, setToken] = useState<String>("");
+  const {email, pass} = usePublic();
 
   async function login() {
 
@@ -31,32 +33,7 @@ export function AuthProvider({ children, email, pass }:  {children: ReactNode} &
 
   }
 
-  useEffect(() => {
-
-    loginService({email, pass})
-    .then((data) => {
-
-      console.log(data);
-      if (data) {
-
-        setToken(data.token);
-        getUserService(data.user_id)
-        .then((dt) => {
-
-          if (dt) {
-            setUser(dt);
-          } else {
-            router.navigate({pathname: "/login"});
-          }
-
-        });
-      } else {
-        router.navigate({pathname: "/login"});
-      }
-
-    })
-
-  }, []);
+  useEffect(() => { login() }, []);
 
   return (
     <AuthContext.Provider value={ {user, token} }>
