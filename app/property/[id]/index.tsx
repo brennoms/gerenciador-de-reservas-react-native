@@ -7,7 +7,6 @@ import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
 
-
 export default function Index() {
 
   const today = new Date()
@@ -63,7 +62,7 @@ export default function Index() {
 
             <Text className="text-2xl">Data Selecionada:</Text>
             <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
-
+            <Text>url: {String(process.env.EXPO_PUBLIC_API_URL)}</Text>
 
 
         </View>
