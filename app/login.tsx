@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { Link, router } from "expo-router";
 
 import { usePublic } from "@/src/contexts/public/PublicHook";
@@ -20,7 +20,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <View className="flex-1 justify-center px-6 bg-gray-100">
+     <KeyboardAvoidingView 
+     		className="justify-center px-6 bg-gray-100" 
+     		style={{ flex: 1 }} 
+     		behavior={Platform.OS === "ios" ? "padding" : "height"}
+     	>
       
 			<Text className="text-3xl font-bold text-center mb-8">
 	      Login
@@ -54,6 +58,6 @@ export default function LoginScreen() {
 	    	ainda não tem uma conta? <Link className="text-blue-500" href={"/register"}>Crie uma</Link>
 	   	</Text>
 
-    </View>
+	   </ KeyboardAvoidingView>
   );
 }

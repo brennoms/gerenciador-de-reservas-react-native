@@ -7,13 +7,15 @@ export default function RootLayout() {
 
   return (
       <AuthProvider>
-        <PropertyProvider>
+      <PropertyProvider>
+      
           <Stack
             screenOptions={{
               headerShown: false
             }} 
           />
-        </PropertyProvider>
+      
+      </PropertyProvider>
       </AuthProvider>
     )
 }
