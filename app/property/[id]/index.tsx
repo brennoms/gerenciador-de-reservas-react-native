@@ -6,13 +6,17 @@ import { Calendar } from "react-native-calendars";
 import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
+import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
+
 
 export default function Index() {
 
   const today = new Date()
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const { propertySelected } = useProperty()
+  const { propertySelected } = useProperty();
+
+  const { calendar } = useCalendar();
 
   const propertyEdit = () => {
     console.log("edit")
