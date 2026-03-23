@@ -6,7 +6,8 @@ import { CalendarProps } from "@/src/types/calendar.types";
 import { useProperty } from "../property/PropertyHook";
 
 
-export function PropertyProvider({ children }: { children: ReactNode }) {
+
+export function CalendarProvider({ children }: { children: ReactNode }) {
 
   const { propertySelected } = useProperty();
   const [calendar, setCalendar] = useState<CalendarProps>([]);
