@@ -4,14 +4,14 @@ import { AuthContext } from "./AuthContext";
 import { UserLogin, UserProps } from "@/src/types/user.types";
 import { login, getUser } from "@/src/serviices/user";
 
-export function AuthProvider({ children, email, pass }: { children: ReactNode, email: String, pass: String}) {
+export function AuthProvider({ children, email, pass }:  {children: ReactNode} & UserLogin) {
 
   const [user, setUser] = useState<UserProps>();
   const [token, setToken] = useState<String>("");
 
   useEffect(() => {
 
-    login(email, senha)
+    login(email, pass)
     .then((data: UserLogin) => {
 
       setToken(data.token);
