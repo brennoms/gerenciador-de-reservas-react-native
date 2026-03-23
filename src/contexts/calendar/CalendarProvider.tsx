@@ -4,6 +4,7 @@ import axios from "axios";
 import { CalendarContext } from "./CalendarContext";
 import { CalendarProps } from "@/src/types/calendar.types";
 import { useProperty } from "../property/PropertyHook";
+import { getCalendar } from "@/src/services/calendar";
 
 
 
@@ -14,7 +15,10 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
 
-    console.log('calendar');
+    getCalendar()
+    .then((data) => {
+      setCalendar(data);
+    })
 
   }, [])
 
