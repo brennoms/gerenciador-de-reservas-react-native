@@ -1,4 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import { useState } from "react";
 
 export default function RegisterScreen() {
@@ -18,7 +19,7 @@ export default function RegisterScreen() {
       return;
     }
 
-    console.log({ nome, email, senha });
+    router.navigate({pathname: "/register/verify"});
   };
 
   return (

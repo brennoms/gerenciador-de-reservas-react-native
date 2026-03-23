@@ -1,5 +1,4 @@
 import { useState, useEffect, ReactNode } from "react";
-import axios from "axios";
 
 import { CalendarContext } from "./CalendarContext";
 import { CalendarProps } from "@/src/types/calendar.types";
