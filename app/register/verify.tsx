@@ -1,14 +1,23 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { useState } from "react";
+import { router } from "expo-router";
+
+import { registerService } from "@/src/services/users";
+import { usePublic } from "@/src/contexts/public/PublicHook";
 
 export default function RegisterScreen() {
-  const [code, setCode] = useState("");
-
-  const handleRegister = () => {
+  const{ name, email, pass, code, setCode } = usePublic()
+ 
+  const handleRegister = async () => {
 
     if (!code) {
       alert("O campo do codigo não pode estar vazio");
       return;
+    }
+
+    const res = await registerService({name, email, pass, code});
+
+    if (res) {
+      router.navigate({pathname:"/property"});
     }
 
   };
@@ -17,7 +26,7 @@ export default function RegisterScreen() {
     <View className="flex-1 justify-center px-6 bg-gray-100">
 
       <Text className="text-2xl font-bold text-center mb-8">
-        Digite o código que foi envidado para seu e-mail
+        Digite o código que foi enviado para seu e-mail
       </Text>
 
       <TextInput

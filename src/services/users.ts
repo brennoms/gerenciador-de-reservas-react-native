@@ -1,47 +1,74 @@
-import axios from "axios"
-import { CreateUser, UserLogin, UserProps } from "../types/user.types";
-import { response } from "../types/response.types";
+import axios, { AxiosError } from "axios";
+import { CreateUser, LoginResponse, UserLogin, UserProps } from "../types/user.types";
 
-const url = process.env.EXPO_PUBLIC_API_URL
+const url = process.env.EXPO_PUBLIC_API_URL;
 
-export async function loginService({email, pass}: UserLogin) {
-	const res: response<{token: string}> = await axios.post(`${url}/usuarios/login`);
+const logError = (serviceName: string, error: unknown) => {
+    if (axios.isAxiosError(error)) {
+        const message = error.response?.data || error.message;
+        const status = error.response?.status;
+        console.error(`[${serviceName}] Erro ${status}:`, message);
+    } else {
+        console.error(`[${serviceName}] Erro inesperado:`, error);
+    }
+};
 
-	if (res.statusCode === 201) {
-		return {ok: true, token: res.data.token};
-	}
-
+export async function loginService({ email, pass }: UserLogin) {
+    try {
+        console.log(`[loginService] Tentando login para: ${email}`);
+        const res = await axios.post(`${url}/usuarios/login`, { email: email, senha: pass });
+        
+        if (res.status === 200 || res.status === 201) {
+            return res.data as LoginResponse;
+        }
+        return false;
+    } catch (error) {
+        logError("loginService", error);
+        return false;
+    }
 }
 
 export async function getUserService(token: string) {
-	const res: response<UserProps> = await axios.get(`${url}/usuarios/me`, 
-		{ headers: { Authorization: `Bearer ${token}` } });
+    try {
+        const res = await axios.get(`${url}/usuarios/me`, { 
+            headers: { Authorization: `Bearer ${token}` } 
+        });
 
-	if (res.statusCode === 201) {
-		return {ok: true, user: res.data};
-	}
-
+        if (res.status === 200) {
+            return res.data as UserProps;
+        }
+        return false;
+    } catch (error) {
+        logError("getUserService", error);
+        return false;
+    }
 }
 
-export async function registerService({name, email, pass, code}: CreateUser) {
-	const res: response<{message: string}> = await axios.post(`${url}/usuarios/register`);
+export async function registerService({ name, email, pass, code }: CreateUser) {
+    try {
+        console.log(`[registerService] Cadastrando: ${email}`);
+        const res = await axios.post(`${url}/usuarios/cadastro`, { 
+            nome: name, 
+            email: email, 
+            senha: pass, 
+            codigo: code 
+        });
 
-	if (res.statusCode === 201) {
-		return true;
-	} else {
-		return false;
-	}
-
+        return res.status === 201;
+    } catch (error) {
+        logError("registerService", error);
+        return false;
+    }
 }
 
 export async function sendCodeService(email: string) {
+    try {
+        console.log(`[sendCodeService] Solicitando código para: ${email}`);
+        const res = await axios.post(`${url}/usuarios/cadastro/codigo`, { email });
 
-	const res: response<{ok: boolean}> = await axios.post(`${url}/usuarios/register`);
-
-	if (res.statusCode === 201) {
-		return true;
-	} else {
-		return false;
-	}
-
+        return res.status === 201 || res.status === 200;
+    } catch (error) {
+        logError("sendCodeService", error);
+        return false;
+    }
 }

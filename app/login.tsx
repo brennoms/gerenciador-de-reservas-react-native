@@ -1,13 +1,21 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { Link } from "expo-router";
-import { useState } from "react";
+import { Link, router } from "expo-router";
+
+import { usePublic } from "@/src/contexts/public/PublicHook";
+import { loginService } from "@/src/services/users";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const {email, pass, setEmail, setPass} = usePublic();
 
-  const handleLogin = () => {
-    console.log(email, senha);
+  const handleLogin = async () => {
+    const login = await loginService({email, pass});
+
+    if (login) {
+    	router.navigate({pathname: "/property"});
+    }
+
+    console.log("falha no login");
+
   };
 
   return (
@@ -25,15 +33,15 @@ export default function LoginScreen() {
 	    />
 
 	    <TextInput
-	      placeholder="Senha"
-	      value={senha}
-	      onChangeText={setSenha}
+	      placeholder="senha"
+	      value={pass}
+	      onChangeText={setPass}
 	      secureTextEntry
 	      className="bg-white p-4 rounded-xl mb-6 border border-gray-300"
 	    />
 
 	    <TouchableOpacity
-	      onPress={handleLogin}
+	      onPress={() => {handleLogin()}}
 	      className="bg-blue-500 p-4 rounded-xl mb-4"
 	    >
 	      <Text className="text-white text-center font-bold text-lg">

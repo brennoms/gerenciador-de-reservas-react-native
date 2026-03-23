@@ -1,18 +1,17 @@
-import { View } from "react-native"
-import { Link } from "expo-router";
-
-const linkclass: string = "text-blue-500 text-center mb-2 text-4xl"
+import { Redirect } from "expo-router";
+import { useEffect } from "react";
+import axios from "axios"
 
 export default function Index() {
+
+  useEffect(() => {
+    axios.get(`${process.env.EXPO_PUBLIC_API_URL}`)
+    .then((data) => {
+      console.log(data.data);
+    })
+  }, [])
+
   return (
-    <View className="flex-1 justify-center">
-
-      <Link className={linkclass} href={"/login"}>/login</Link>
-
-      <Link className={linkclass} href={"/register"}>/register</Link>
-
-      <Link className={linkclass} href={"/property"}>/property</Link>
-
-    </View>
+    <Redirect href="/login"/>
   );
 }

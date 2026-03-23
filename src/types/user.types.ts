@@ -1,17 +1,22 @@
 export type UserProps = {
-	user_id: String;
-	name: String;
-	email: String;
+	user_id: string;
+	name: string;
+	email: string;
 }
 
 export type CreateUser = {
-	name: String;
-	email: String;
-	pass: String;
-	code: String;
+	name: string;
+	email: string;
+	pass: string;
+	code: string;
 }
 
 export type UserLogin = {
-	email: String;
-	pass: String;
+	email: string;
+	pass: string;
+}
+
+export type LoginResponse = {
+	user_id: string;
+	token: string;
 }

@@ -1,25 +1,34 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { useState } from "react";
+import { usePublic } from "@/src/contexts/public/PublicHook";
+import { sendCodeService } from "@/src/services/users";
 
 export default function RegisterScreen() {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
 
-  const handleRegister = () => {
-    if (!nome || !email || !senha || !confirmarSenha) {
+  const {name, email, pass, setName, setEmail, setPass} = usePublic()
+  const [confirmpass, setConfirmpass] = useState("");
+
+  const handleRegister = async () => {
+    if (!name || !email || !pass || !confirmpass) {
       alert("Preencha todos os campos");
       return;
     }
 
-    if (senha !== confirmarSenha) {
+    if (pass !== confirmpass) {
       alert("As senhas não coincidem");
       return;
     }
 
-    router.navigate({pathname: "/register/verify"});
+    const res = await sendCodeService(email);
+
+    if (res) {
+      router.navigate({pathname: "/register/verify"});
+    } else {
+      console.log("problema no envio do email");
+    }
+
+    
   };
 
   return (
@@ -31,8 +40,8 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Nome"
-        value={nome}
-        onChangeText={setNome}
+        value={name}
+        onChangeText={setName}
         className="bg-white p-4 rounded-xl mb-4 border border-gray-300"
       />
 
@@ -46,16 +55,16 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
+        value={pass}
+        onChangeText={setPass}
         secureTextEntry
         className="bg-white p-4 rounded-xl mb-4 border border-gray-300"
       />
 
       <TextInput
         placeholder="Confirmar senha"
-        value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
+        value={confirmpass}
+        onChangeText={setConfirmpass}
         secureTextEntry
         className="bg-white p-4 rounded-xl mb-6 border border-gray-300"
       />
@@ -65,7 +74,7 @@ export default function RegisterScreen() {
         className="bg-blue-500 p-4 rounded-xl"
       >
         <Text className="text-white text-center font-bold text-lg">
-          Criar conta
+          Continuar
         </Text>
       </TouchableOpacity>
 
