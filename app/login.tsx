@@ -19,11 +19,13 @@ export default function LoginScreen() {
 
     const login = await loginService({email, pass});
 
+    if (!login.success) {
+      alert(login.message || "Erro ao fazer login");
+    }
+
     if (login.success && login.data?.token) {
       setToken(login.data.token);
     	router.navigate({pathname: "/property"});
-    } else {
-      alert(login.message || "Erro ao fazer login");
     }
 
   };
