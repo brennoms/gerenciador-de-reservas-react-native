@@ -1,8 +1,8 @@
 export type PropertyProps = {
   id: number;
-  image: string;
   name: string;
   address: string;
+  image: string;
 };
 
 export type AddPropertyProps = Omit<PropertyProps, "id">;
