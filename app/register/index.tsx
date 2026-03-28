@@ -50,6 +50,9 @@ export default function RegisterScreen() {
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        autoCapitalize="none"
+        autoComplete="email"
+        textContentType="emailAddress"
         className="bg-white p-4 rounded-xl mb-4 border border-gray-300"
       />
 
