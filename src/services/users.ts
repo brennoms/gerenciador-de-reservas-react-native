@@ -29,7 +29,9 @@ const logError = (serviceName: string, error: unknown) => {
 const getErrorMessage = (error: unknown): string => {
   if (axios.isAxiosError(error)) {
     if (typeof error.response?.data === "object") {
-      return (error.response?.data as any)?.erro || error.message;
+      return (error.response?.data as any)?.erro || 
+        (error.response?.data as any)?.error ||
+        error.message;
     }
 
     return error.response?.data || error.message;
