@@ -3,6 +3,7 @@ import { router } from "expo-router";
 
 import { registerService } from "@/src/services/users";
 import { usePublic } from "@/src/contexts/public/PublicHook";
+import { setUnauthorizedHandler, getUnauthorizedHandler } from "@/src/services/api";
 
 export default function RegisterScreen() {
   const{ name, email, pass, code, setCode } = usePublic()
@@ -14,10 +15,22 @@ export default function RegisterScreen() {
       return;
     }
 
+    const previousHandler = () => getUnauthorizedHandler();
+    setUnauthorizedHandler(() => {});
     const res = await registerService({name, email, pass, code});
+    setUnauthorizedHandler(previousHandler);
 
-    if (res) {
-      router.navigate({pathname:"/property"});
+    if (!res.success) {
+      if ("message" in res) {
+        alert(res.message);
+      } else {
+        alert("Ocorreu um erro desconhecido");
+      }
+      return;
+    }
+
+    if (res.success) {
+      router.replace({pathname:"/property"});
     }
 
   };
