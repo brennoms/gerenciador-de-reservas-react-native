@@ -6,8 +6,12 @@ export const api = axios.create({
 
 
 let onUnauthorized: (() => void) | null = null;
+
 export function setUnauthorizedHandler(handler: () => void) {
   onUnauthorized = handler;
+}
+export function getUnauthorizedHandler() {
+  return onUnauthorized;
 }
 
 api.interceptors.response.use(

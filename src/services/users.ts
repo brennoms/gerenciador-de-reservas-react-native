@@ -111,6 +111,13 @@ export async function registerService(
   } catch (error) {
     logError("registerService", error);
 
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return {
+        success: false,
+        message: "Código inválido",
+      };
+    }
+
     return {
       success: false,
       message: getErrorMessage(error),
