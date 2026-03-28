@@ -22,10 +22,10 @@ export default function RegisterScreen() {
 
     const res = await sendCodeService(email);
 
-    if (res) {
+    if (res.success) {
       router.navigate({pathname: "/register/verify"});
     } else {
-      console.log("problema no envio do email");
+      alert(res.message);
     }
 
     
