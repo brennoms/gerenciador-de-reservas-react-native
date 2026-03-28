@@ -1,7 +1,7 @@
 import axios from "axios";
 import { api } from "./api";
 
-import { PropertyProps } from "../types/property.types";
+import { AddPropertyProps, PropertyProps } from "../types/property.types";
 
 
 export type ServiceResponse<T = unknown> = {
@@ -87,23 +87,18 @@ export async function getPropertyByIdService(
 
 export async function createPropertyService(
   token: string,
-  data: {
-    nome: string;
-    descricao: string;
-    preco: number;
-    imagem?: any; // file (expo-image-picker)
-  }
+  data: AddPropertyProps
 ): Promise<ServiceResponse> {
   try {
+    console.log("Creating property with data:", data);
     const formData = new FormData();
 
-    formData.append("nome", data.nome);
-    formData.append("descricao", data.descricao);
-    formData.append("preco", String(data.preco));
+    formData.append("nome", data.name);
+    formData.append("endereco", data.address);
 
-    if (data.imagem) {
+    if (data.image) {
       formData.append("imagem", {
-        uri: data.imagem.uri,
+        uri: data.image,
         name: "image.jpg",
         type: "image/jpeg",
       } as any);
