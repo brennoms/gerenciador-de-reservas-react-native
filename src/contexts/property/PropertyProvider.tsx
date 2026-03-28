@@ -2,10 +2,13 @@ import { useState, useEffect, ReactNode, use } from "react";
 
 import { PropertyContext } from "./PropertyContext";
 import { PropertyProps, AddPropertyProps } from "../../types/property.types";
+import { getPropertiesService } from "../../services/propertys";
 
-import axios from "axios"; // for tests, we will fetch some images from the internet and create some properties with them
+import { useAuth } from "../auth/AuthHook";
 
 export function PropertyProvider({ children }: { children: ReactNode }) {
+
+  const { token } = useAuth();
 
   const [properties, setProperties] = useState<PropertyProps[]>([]);
   const [propertySelected, setPropertySelected] = useState<PropertyProps | null>(null);
@@ -13,19 +16,12 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   // for tests, we will fetch some images from the internet and create some properties with them
   useEffect(() =>{
 
-    axios.get("https://picsum.photos/v2/list?limit=5&page=45").then(response => {
-      const images = response.data;
-      for(let image of images) {
-        setProperties(prev => [
-          ...prev,
-          {
-            id: prev.length + 1,
-            image: image.download_url,
-            name: `Property ${prev.length + 1}`,
-            address: `Address ${prev.length + 1}`,
-          },
-        ]);
-      };
+    if (!token) return;
+
+    getPropertiesService(token).then(res => {
+      if(res.success && res.data) {
+        setProperties(res.data);
+      }
     });
 
   }, []);
