@@ -10,6 +10,7 @@ export function PublicProvider({ children }: { children: ReactNode}) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [code, setCode] = useState("");
+  const [token, setToken] = useState("");
 
   async function register() {
     const res = await registerService({name, email, pass, code});
@@ -34,7 +35,8 @@ export function PublicProvider({ children }: { children: ReactNode}) {
   async function login() {
     const res = await loginService({email, pass})
 
-    if (res) {
+    if (res.data?.token) {
+      setToken(res.data.token);
       router.navigate({pathname: "/property"});
     }
 
@@ -43,7 +45,7 @@ export function PublicProvider({ children }: { children: ReactNode}) {
   }
 
   return (
-    <PublicContext.Provider value={{ name, email, pass, code, setName, setEmail, setPass, setCode }}>
+    <PublicContext.Provider value={{ name, email, pass, code, token, setName, setEmail, setPass, setCode, setToken }}>
       {children}
     </PublicContext.Provider>
   );

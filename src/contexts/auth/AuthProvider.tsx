@@ -2,41 +2,64 @@ import { useState, useEffect, ReactNode } from "react";
 import { router } from "expo-router";
 
 import { AuthContext } from "./AuthContext";
-import { LoginResponse, UserLogin, UserProps } from "@/src/types/user.types";
-import { loginService, getUserService } from "@/src/services/users";
 import { usePublic } from "../public/PublicHook";
+import { UserProps } from "@/src/types/user.types";
+import { getUserService } from "@/src/services/users";
+import { setUnauthorizedHandler } from "@/src/services/api";
 
-export function AuthProvider({ children }:  {children: ReactNode}) {
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const { token: publicToken } = usePublic();
 
+  const [token, setToken] = useState<string | null>(publicToken);
   const [user, setUser] = useState<UserProps | null>(null);
-  const [token, setToken] = useState<String>("");
-  const {email, pass} = usePublic();
 
-  async function login() {
 
-    const login = await loginService({email, pass});
-
-    if (login) {
-      setToken(login.token);
-
-      const me = await getUserService(login.token);
-
-      if (me) {
-        setUser(me);
-      } else {
-        router.navigate({pathname:"/login"});
+  useEffect(() => {
+    async function loadUser() {
+      if (!token) {
+        setUser(null);
+        router.replace("/login");
+        return;
       }
 
-    } else {
-      router.navigate({pathname:"/login"});
+      const res = await getUserService(token);
+
+      if (res.success && res.data) {
+        setUser(res.data);
+      } else {
+        setUser(null);
+        setToken(null);
+        router.replace("/login");
+      }
     }
 
-  }
+    loadUser();
+    setUnauthorizedHandler(() => {
+      signOut();
+    });
+  }, [token]);
 
-  useEffect(() => { login() }, []);
+
+  const signIn = (newToken: string) => {
+    setToken(newToken);
+  };
+
+
+  const signOut = () => {
+    setUser(null);
+    setToken(null);
+    router.replace("/login");
+  };
 
   return (
-    <AuthContext.Provider value={ {user, token} }>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        signIn,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -6,6 +6,12 @@ type PublicContextType = {
 	setEmail: (email: string) => void;
 	setPass: (pass: string) => void;
 	setCode: (code: string) => void;
+	setToken: (token: string) => void;
+	name: string;
+	email: string;
+	pass: string;
+	code: string;
+	token: string;
 } & CreateUser;
 
 
