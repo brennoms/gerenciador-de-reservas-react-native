@@ -46,9 +46,16 @@ export async function getPropertiesService(
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    const properties: PropertyProps[] = res.data.imoveis.map((property: any) => ({
+      id: property._id,
+      name: property.nome,
+      address: property.endereco,
+      image: property.imagem_url,
+    }));
+
     return {
       success: true,
-      data: res.data.imoveis,
+      data: properties,
     };
   } catch (error) {
     logError("getPropertiesService", error);
