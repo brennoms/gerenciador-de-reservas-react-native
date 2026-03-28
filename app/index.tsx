@@ -26,7 +26,7 @@ export default function Index() {
   }, []);
 
   if (loaded) {
-    return <Redirect href="/login" />;
+    return <Redirect href="/property" />;
   }
 
   return (
