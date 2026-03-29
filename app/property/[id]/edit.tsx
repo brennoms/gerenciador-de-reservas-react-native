@@ -64,10 +64,6 @@ export default function AddProperty() {
       style={{ flex: 1 }} 
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Text className="text-2xl font-bold mb-5">
-        Editar Imóvel
-      </Text>
-
       <TouchableOpacity
         onPress={pickImage}
         className={`${image ? 'h-min':'h-40'} w-min bg-gray-200 rounded-xl justify-center items-center mb-5 overflow-hidden`}
