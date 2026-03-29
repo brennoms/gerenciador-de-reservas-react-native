@@ -154,3 +154,47 @@ export async function deletePropertyService(
     };
   }
 }
+
+export async function updatePropertyService(
+  token: string,
+  id: number,
+  data: AddPropertyProps
+): Promise<ServiceResponse> {
+  try {
+    const formData = new FormData();
+
+    if (data.name) {
+      formData.append("nome", data.name);
+    }
+    if (data.address) {
+      formData.append("endereco", data.address);
+    }
+
+    if (data.image) {
+      formData.append("imagem", {
+        uri: data.image,
+        name: "image.jpg",
+        type: "image/jpeg",
+      } as any);
+    }
+
+    await api.patch(`/imoveis/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return {
+      success: true,
+      message: "Imóvel atualizado com sucesso",
+    };
+  } catch (error) {
+    logError("updatePropertyService", error);
+
+    return {
+      success: false,
+      message: getErrorMessage(error),
+    };
+  }
+}
