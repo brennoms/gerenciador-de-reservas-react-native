@@ -19,7 +19,7 @@ export default function AddProperty() {
 
   const {addProperty} = useProperty();
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
