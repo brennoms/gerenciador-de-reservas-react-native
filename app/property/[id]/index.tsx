@@ -1,12 +1,13 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from "expo-router";
 import { Calendar } from "react-native-calendars";
 
 import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
 import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
-import { router } from "expo-router";
 
 
 export default function Index() {
@@ -37,7 +38,7 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
-        <View className="w-full h-min mb-4">
+        <View className="w-full h-min">
           <Calendar
             style={{ borderRadius: 10 }}
             enableSwipeMonths={true}
@@ -54,13 +55,17 @@ export default function Index() {
             markedDates={styledDays}
 
           />
+          <TouchableOpacity onPress={() => router.push("./add")} className="self-end rounded-lg mr-4">
+            <Ionicons name="add-circle" size={48} color="lightgreen" />
+          </TouchableOpacity>
         </View>
 
         <View className="w-full h-min items-center">
 
-            <Text className="text-2xl">Data Selecionada:</Text>
-            <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
-            <Text>url: {String(process.env.EXPO_PUBLIC_API_URL)}</Text>
+          <Text className="text-2xl">Data Selecionada:</Text>
+          
+          <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
+          <Text>url: {String(process.env.EXPO_PUBLIC_API_URL)}</Text>
 
 
         </View>
