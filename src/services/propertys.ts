@@ -1,14 +1,8 @@
 import axios from "axios";
-import { api, logError, getErrorMessage } from "./api";
+import { api, logError, getErrorMessage, ServiceResponse } from "./api";
 
 import { AddPropertyProps, PropertyProps } from "../types/property.types";
 
-
-export type ServiceResponse<T = unknown> = {
-  success: boolean;
-  data?: T;
-  message?: string;
-};
 
 export async function getPropertiesService(
   token: string

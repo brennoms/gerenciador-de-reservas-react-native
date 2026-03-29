@@ -51,3 +51,9 @@ export const getErrorMessage = (error: unknown): string => {
 
   return "Erro inesperado. Tente novamente.";
 };
+
+export type ServiceResponse<T = unknown> = {
+  success: boolean;
+  data?: T;
+  message?: string;
+};

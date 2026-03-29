@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api, logError, getErrorMessage } from "./api";
+import { api, logError, getErrorMessage, ServiceResponse } from "./api";
 
 import {
   CreateUser,
@@ -7,13 +7,6 @@ import {
   UserLogin,
   UserProps,
 } from "../types/user.types";
-
-
-export type ServiceResponse<T = unknown> = {
-  success: boolean;
-  data?: T;
-  message?: string;
-};
 
 
 export async function loginService({
