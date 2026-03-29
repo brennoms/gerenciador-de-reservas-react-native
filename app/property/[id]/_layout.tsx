@@ -1,9 +1,11 @@
 import { Stack } from "expo-router";
 import { CalendarProvider } from "@/src/contexts/calendar/CalendarProvider";
+import { ReservationProvider } from "@/src/contexts/reservation/ReservationProvider";
 
 export default function RootLayout() {
 
   return (
+      <ReservationProvider>
       <CalendarProvider>
         <Stack
             screenOptions={
@@ -19,5 +21,6 @@ export default function RootLayout() {
             }
           />
       </CalendarProvider>
+      </ReservationProvider>
     )
 }
