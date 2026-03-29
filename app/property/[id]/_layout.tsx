@@ -13,7 +13,9 @@ export default function RootLayout() {
               ({route}) => {
                 if (route.name === "edit") {
                   return { title: "editar propriedade" }
-                } else {
+                } else if (route.name === "add") {
+                  return { title: "Adicionar Reserva" }
+                }else {
                   return { title: "Propriedade" }
                 }
               }
