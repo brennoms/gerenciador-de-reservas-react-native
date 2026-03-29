@@ -19,7 +19,7 @@ export type MonthProps = {
     year: number;
     month_name: string;
     month_number: number;
-    days: dayProps[];
+    days: DayProps[];
 };
 
-export type CalendarProps = monthProps[];
+export type CalendarProps = MonthProps[];
