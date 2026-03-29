@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native";
 import { router } from "expo-router";
 import { useState } from "react";
 import { usePublic } from "@/src/contexts/public/PublicHook";
@@ -32,7 +32,11 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View className="flex-1 justify-center px-6 bg-gray-100">
+    <KeyboardAvoidingView 
+      className="justify-center px-6 bg-gray-100" 
+      style={{ flex: 1 }} 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
 
       <Text className="text-3xl font-bold text-center mb-8">
         Criar Conta
@@ -81,6 +85,6 @@ export default function RegisterScreen() {
         </Text>
       </TouchableOpacity>
 
-    </View>
+    </KeyboardAvoidingView>
   );
 }
