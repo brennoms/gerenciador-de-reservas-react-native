@@ -1,6 +1,7 @@
 import { useState, useEffect, ReactNode } from "react";
 
 import { CalendarContext } from "./CalendarContext";
+import { useReservation } from "../reservation/ReservationHook";
 
 
 export function CalendarProvider({ children }: { children: ReactNode }) {
@@ -10,7 +11,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
   
-
+  const { reservations } = useReservation();
 
   useEffect(() => {
 
