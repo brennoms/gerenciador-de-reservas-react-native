@@ -1,28 +1,37 @@
 import { useState, useEffect, ReactNode } from "react";
 
 import { CalendarContext } from "./CalendarContext";
-import { CalendarProps } from "@/src/types/calendar.types";
-import { useProperty } from "../property/PropertyHook";
-import { getCalendar } from "@/src/services/calendar";
-
 
 
 export function CalendarProvider({ children }: { children: ReactNode }) {
 
-  const { propertySelected } = useProperty();
-  const [calendar, setCalendar] = useState<CalendarProps>([]);
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [calendarDate, setCalendarDate] = useState(new Date());
+  const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
+  
+
 
   useEffect(() => {
 
-    getCalendar()
-    .then((data) => {
-      setCalendar(data);
-    })
+    reloadStyledDays();
 
   }, [])
 
+  const calendarDayPress = (day: Date) => {
+    setSelectedDate(day);
+  }
+
+  const calendarMonthChange = (month: Date) => {
+    setCalendarDate(month);
+  }
+
+  const reloadStyledDays = () => {
+    return {}
+  }
+
   return (
-    <CalendarContext.Provider value={{ calendar }}>
+    <CalendarContext.Provider value={{ selectedDate, calendarDayPress, calendarDate, calendarMonthChange, styledDays, reloadStyledDays,today }}>
       {children}
     </CalendarContext.Provider>
   );

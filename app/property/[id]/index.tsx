@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native"
-import { useState } from "react";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Calendar } from "react-native-calendars";
 
@@ -12,12 +11,9 @@ import { router } from "expo-router";
 
 export default function Index() {
 
-  const today = new Date()
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
   const { propertySelected } = useProperty();
 
-  const { calendar } = useCalendar();
+  const { today, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
 
   const propertyEdit = () => {
     router.push(`/property/[id]/edit`);
@@ -46,19 +42,16 @@ export default function Index() {
             style={{ borderRadius: 10 }}
             enableSwipeMonths={true}
             hideExtraDays={false}
+            current={today.toISOString().split('T')[0]}
             
             onMonthChange={(month) =>{
-              console.log('month', month)
+              calendarMonthChange(new Date(month.year, month.month - 1, 1));
             }}
             onDayPress={(day) => {
-              console.log('selected day', day);
               const [ano, mes, dia] = day.dateString.split("-").map(Number);
-              setSelectedDate(new Date(ano, mes - 1, dia));
+              calendarDayPress(new Date(ano, mes - 1, dia));
             }}
-            markedDates={{
-              [today.toLocaleDateString('pt-BR').split('/').reverse().join('-')]: { marked: true, dotColor: 'blue', selectedColor: 'blue' },
-              [selectedDate.toLocaleDateString('pt-BR').split('/').reverse().join('-')]: { selected: true, selectedColor: '#27d3f5' },
-            }}
+            markedDates={styledDays}
 
           />
         </View>

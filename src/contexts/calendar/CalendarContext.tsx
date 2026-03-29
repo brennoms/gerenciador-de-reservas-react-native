@@ -1,9 +1,13 @@
 import { createContext } from "react";
 
-import { CalendarProps } from "@/src/types/calendar.types";
-
 type CalendarContextType = {
-	calendar: CalendarProps;
+	today: Date;
+	selectedDate: Date;
+	calendarDayPress: (day: Date) => void;
+	calendarDate: Date;
+	calendarMonthChange: (month: Date) => void;
+	styledDays: { [key: string]: any };
+	reloadStyledDays: () => void;
 };
 
 export const CalendarContext = createContext<CalendarContextType | null>(null);
