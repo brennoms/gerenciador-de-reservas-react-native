@@ -13,7 +13,7 @@ import {
   updateReservationService
 } from "@/src/services/reservations";
 
-export function PropertyProvider({ children }: { children: ReactNode }) {
+export function ReservationProvider({ children }: { children: ReactNode }) {
   
   const { token } = useAuth();
   const { propertySelected } = useProperty();
