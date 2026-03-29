@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api } from "./api";
+import { api, logError, getErrorMessage } from "./api";
 
 import { AddPropertyProps, PropertyProps } from "../types/property.types";
 
@@ -9,34 +9,6 @@ export type ServiceResponse<T = unknown> = {
   data?: T;
   message?: string;
 };
-
-const logError = (serviceName: string, error: unknown) => {
-  if (axios.isAxiosError(error)) {
-    const message = error.response?.data || error.message;
-    const status = error.response?.status;
-    console.error(`[${serviceName}] Erro ${status}:`, message);
-  } else {
-    console.error(`[${serviceName}] Erro inesperado:`, error);
-  }
-};
-
-
-const getErrorMessage = (error: unknown): string => {
-  if (axios.isAxiosError(error)) {
-    if (typeof error.response?.data === "object") {
-      return (
-        (error.response?.data as any)?.erro ||
-        (error.response?.data as any)?.error ||
-        error.message
-      );
-    }
-
-    return error.response?.data || error.message;
-  }
-
-  return "Erro inesperado. Tente novamente.";
-};
-
 
 export async function getPropertiesService(
   token: string
