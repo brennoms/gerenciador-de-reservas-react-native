@@ -1,4 +1,5 @@
 import { useState, useEffect, ReactNode, use} from "react";
+import { router } from "expo-router";
 
 import { ReservationContext } from "./ReservationContext";
 import { ReservationsProps, CreateReservation } from "@/src/types/reservations.types";
@@ -43,7 +44,9 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
   const addReservation = (reservation: CreateReservation) => {
     if (token && propertySelected) {
       createReservationService(token, propertySelected.id, reservation).then((res) => {
-        if (res.data) {
+        if (res.success) {
+          alert("Reserva criada com sucesso!");
+          router.back();
           populateReservations();
         } else {
           alert(res.message || "Failed to add reservation");

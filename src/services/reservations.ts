@@ -134,6 +134,7 @@ export async function createReservationService(
   data: CreateReservation
 ): Promise<ServiceResponse> {
   try {
+    console.log("Creating reservation with data:", data);
     await api.post(
       `/imoveis/${propertyId}/reservas`,
       {

@@ -55,7 +55,7 @@ export default function Index() {
             markedDates={styledDays}
 
           />
-          <TouchableOpacity onPress={() => router.push("./add")} className="self-end rounded-lg mr-4">
+          <TouchableOpacity onPress={() => router.push("/property/[id]/add")} className="self-end rounded-lg mr-4">
             <Ionicons name="add-circle" size={48} color="lightgreen" />
           </TouchableOpacity>
         </View>
