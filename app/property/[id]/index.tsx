@@ -7,6 +7,7 @@ import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
 import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
+import { router } from "expo-router";
 
 
 export default function Index() {
@@ -19,7 +20,7 @@ export default function Index() {
   const { calendar } = useCalendar();
 
   const propertyEdit = () => {
-    console.log("edit")
+    router.push(`/property/[id]/edit`);
   }
 
   return propertySelected ? 

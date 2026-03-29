@@ -6,6 +6,7 @@ type PropertyContextType = {
   addProperty: (props: AddPropertyProps) => void;
   propertySelected: PropertyProps | null;
   selectProperty: (id: number) => void;
+  updateProperty: (props: AddPropertyProps) => void;
 };
 
 export const PropertyContext = createContext<PropertyContextType | null>(null);

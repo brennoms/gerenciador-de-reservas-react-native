@@ -2,7 +2,7 @@ import { useState, useEffect, ReactNode, use } from "react";
 
 import { PropertyContext } from "./PropertyContext";
 import { PropertyProps, AddPropertyProps } from "../../types/property.types";
-import { getPropertiesService, createPropertyService } from "../../services/propertys";
+import { getPropertiesService, createPropertyService, updatePropertyService } from "../../services/propertys";
 
 import { useAuth } from "../auth/AuthHook";
 
@@ -42,6 +42,20 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const updateProperty = ({ name, address, image }: AddPropertyProps) => {
+    
+    if (!token || !propertySelected) return;
+
+    updatePropertyService(token, propertySelected.id, { name, address, image }).then(res => {
+      if (res.data) {
+        populateProperties();
+        setPropertySelected(res.data);
+      } else {
+        alert(res.message);
+      }
+    });
+  }
+
   const selectProperty = (id: number) => {
     const property = properties.find(p => p.id === id);
 
@@ -52,7 +66,7 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <PropertyContext.Provider value={{ properties, addProperty, propertySelected, selectProperty }}>
+    <PropertyContext.Provider value={{ properties, addProperty, propertySelected, selectProperty, updateProperty }}>
       {children}
     </PropertyContext.Provider>
   );
