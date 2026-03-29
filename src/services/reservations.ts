@@ -89,6 +89,15 @@ export async function getReservationsByPropertyService(
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log(res.data);
+
+    if (!res.data.reservas) {
+      return {
+        success: true,
+        data: [],
+      };
+    }
+
     const reservations: ReservationsProps[] = res.data.reservas.map(
       (item: any) => ({
         id: item._id,
