@@ -7,11 +7,11 @@ import { useAuth } from "../auth/AuthHook";
 import { useProperty } from "../property/PropertyHook";
 
 import { 
-  fetchReservations, 
-  addReservationService, 
-  removeReservationService, 
-  updateReservationService 
-} from "@/src/services/reservationService";
+  getReservationsByPropertyService,
+  createReservationService,
+  deleteReservationService,
+  updateReservationService
+} from "@/src/services/reservations";
 
 export function PropertyProvider({ children }: { children: ReactNode }) {
   
@@ -21,14 +21,14 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   const [reservations, setReservations] = useState<ReservationsProps[]>([]);
 
   useEffect(() => {
-    if (token) {
+    if (token && propertySelected) {
       populateReservations();
     }
   }, [token]);
 
   const populateReservations = () => {
-    if (token) {
-      fetchReservations(token).then((res) => {
+    if (token && propertySelected) {
+      getReservationsByPropertyService(token, propertySelected.id).then((res) => {
         
         if (res.data) {
           setReservations(res.data);
@@ -41,8 +41,8 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   }
 
   const addReservation = (reservation: CreateReservation) => {
-    if (token) {
-      addReservationService(token, propertySelected?.id, reservation).then((res) => {
+    if (token && propertySelected) {
+      createReservationService(token, propertySelected.id, reservation).then((res) => {
         if (res.data) {
           populateReservations();
         } else {
@@ -53,8 +53,8 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   }
 
   const removeReservation = (reservationId: number) => {
-    if (token) {
-      removeReservationService(token, reservationId).then((res) => {
+    if (token && propertySelected) {
+      deleteReservationService(token, propertySelected.id, reservationId).then((res) => {
         if (res.success) {
           populateReservations();
         } else {
@@ -65,8 +65,8 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
   }
 
   const updateReservation = (reservationId: number, updatedData: CreateReservation) => {
-    if (token) {
-      updateReservationService(token, reservationId, updatedData).then((res) => {
+    if (token && propertySelected) {
+      updateReservationService(token, propertySelected.id, reservationId, updatedData).then((res) => {
         if (res.success) {
           populateReservations();
         } else {
