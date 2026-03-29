@@ -57,11 +57,7 @@ export default function AddProperty() {
 
   return (
     <View className="flex-1 bg-gray-100 p-5">
-      <Text className="text-2xl font-bold mb-5">
-        Adicionar Imóvel
-      </Text>
 
-      {/* Image Picker */}
       <TouchableOpacity
         onPress={pickImage}
         className={`${image ? 'h-min':'h-40'} w-min bg-gray-200 rounded-xl justify-center items-center mb-5 overflow-hidden`}
@@ -78,7 +74,6 @@ export default function AddProperty() {
         )}
       </TouchableOpacity>
 
-      {/* Nome */}
       <TextInput
         placeholder="Nome do imóvel"
         value={name}
@@ -86,7 +81,6 @@ export default function AddProperty() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Endereço */}
       <TextInput
         placeholder="Endereço"
         value={address}
@@ -94,7 +88,6 @@ export default function AddProperty() {
         className="border border-gray-300 rounded-lg p-3 mb-6"
       />
 
-      {/* Botão */}
       <TouchableOpacity
         onPress={handleSubmit}
         className="bg-blue-500 p-4 rounded-xl items-center"

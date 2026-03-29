@@ -10,9 +10,17 @@ export default function RootLayout() {
       <PropertyProvider>
       
           <Stack
-            screenOptions={{
-              headerShown: false
-            }} 
+            screenOptions={
+
+              ({route}) => {
+                if (route.name === "add") {
+                  return { title: "Adicionar Propriedade" }
+                } else {
+                  return { headerShown: false }
+                }
+              }
+
+            }
           />
       
       </PropertyProvider>
