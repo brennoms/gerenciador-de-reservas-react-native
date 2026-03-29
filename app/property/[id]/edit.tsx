@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 import {
-  View,
   Text,
   TextInput,
   TouchableOpacity,
   Image,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
@@ -58,7 +59,11 @@ export default function AddProperty() {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-5">
+    <KeyboardAvoidingView 
+      className="bg-gray-100 p-5" 
+      style={{ flex: 1 }} 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Text className="text-2xl font-bold mb-5">
         Editar Imóvel
       </Text>
@@ -95,12 +100,12 @@ export default function AddProperty() {
 
       <TouchableOpacity
         onPress={handleSubmit}
-        className="bg-blue-500 p-4 rounded-xl items-center"
+        className="bg-blue-500 p-4 rounded-xl items-center mb-5"
       >
         <Text className="text-white font-bold">
           Salvar
         </Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
