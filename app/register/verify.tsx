@@ -30,7 +30,7 @@ export default function RegisterScreen() {
     }
 
     if (res.success) {
-      router.replace({pathname:"/property"});
+      router.replace({pathname:"/login"});
     }
 
   };
