@@ -159,7 +159,7 @@ export async function updatePropertyService(
   token: string,
   id: number,
   data: AddPropertyProps
-): Promise<ServiceResponse> {
+): Promise<ServiceResponse<PropertyProps>> {
   try {
     const formData = new FormData();
 
@@ -178,15 +178,23 @@ export async function updatePropertyService(
       } as any);
     }
 
-    await api.patch(`/imoveis/${id}`, formData, {
+    const res = await api.patch(`/imoveis/${id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });
 
+    const propertyUpdated = {
+      id: res.data._id,
+      name: res.data.nome,
+      address: res.data.endereco,
+      image: res.data.imagem_url,
+    };
+
     return {
       success: true,
+      data: propertyUpdated,
       message: "Imóvel atualizado com sucesso",
     };
   } catch (error) {
