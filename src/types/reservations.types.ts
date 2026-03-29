@@ -1,4 +1,5 @@
 export type ReservationsProps = {
+	id: Number;
 	user_id: String;
 	property_id: String;
 	name: String;
