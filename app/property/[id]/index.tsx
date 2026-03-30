@@ -66,18 +66,23 @@ export default function Index() {
             markedDates={styledDays}
 
           />
-          <TouchableOpacity onPress={() => router.push("/property/[id]/add")} className="self-end rounded-lg mr-4">
+          <TouchableOpacity onPress={() => router.push("/property/[id]/reservation/add")} className="self-end rounded-lg mr-4">
             <Ionicons name="add-circle" size={48} color="lightgreen" />
           </TouchableOpacity>
         </View>
 
         <View className="w-full h-min items-center">
-
-          <Text className="text-2xl">Data Selecionada:</Text>
           
-          <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
-          
-          {selectedReservation ? <ReservationCard reservation={selectedReservation} /> : <></>}
+          {selectedReservation ? 
+            <>
+              <ReservationCard reservation={selectedReservation} /> 
+              <TouchableOpacity onPress={() => router.push("/property/[id]/reservation/edit")} className="absolute top-3 left-3 px-2 rounded-lg bg-blue-100">
+                <AntDesign name="edit" size={32} color="black" />
+              </TouchableOpacity>
+            </>
+          : 
+            <></>
+          }
 
         </View>
 
