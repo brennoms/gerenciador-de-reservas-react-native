@@ -21,7 +21,7 @@ export default function AddReservation() {
   const { today, styledDaysSelection, selectionPress, setSelectionCalendar, selection } = useCalendar();
   
   useEffect(() => {
-    setSelectionCalendar(true);
+    setSelectionCalendar("add");
   }, [])
 
   const [name, setName] = useState("");
@@ -46,7 +46,7 @@ export default function AddReservation() {
         setInitDate(isoDate(selection[1]).split("-").reverse().join("/"));
         setEndDate(isoDate(selection[0]).split("-").reverse().join("/"));
       }
-    } else {
+    } else if (selection.length === 1) {
       setInitDate(isoDate(selection[0]).split("-").reverse().join("/"))
       setEndDate("");
     }

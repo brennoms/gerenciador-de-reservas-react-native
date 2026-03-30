@@ -29,11 +29,17 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
     reloadStyledDays();
 
-    if (selectionCalendar) {
+    if (selectionCalendar === "add" || selectionCalendar === "edit") {
       reloadStyledDaysSelection();
     }
 
   }, [reservations, selectedDate, calendarDate, holidays, selection])
+
+  useEffect(() => {
+
+    setSelection([]);
+
+  }, [selectionCalendar])
 
   useEffect(() => {
 
@@ -156,7 +162,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const reloadStyledDaysSelection = () => {
 
     function isoDate(date: Date) {
-      return date.toISOString().split("T")[0];
+      return date?.toISOString().split("T")[0];
     }
 
     const newStyledDays = {};
