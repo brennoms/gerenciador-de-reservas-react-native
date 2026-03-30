@@ -19,12 +19,6 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
   }, [reservations])
 
-  useEffect(() => {
-
-    reloadStyledDays();
-
-  }, [])
-
   const calendarDayPress = (day: Date) => {
     setSelectedDate(day);
   }

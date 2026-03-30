@@ -21,12 +21,13 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
 
   const [reservations, setReservations] = useState<ReservationsProps[]>([]);
   const [selectedReservation, setSelectedReservation] = useState<ReservationsProps | null>(null)
+  console.log(selectedReservation)
 
   useEffect(() => {
     if (token && propertySelected) {
       populateReservations();
     }
-  }, [token]);
+  }, [propertySelected]);
 
   const populateReservations = () => {
     if (token && propertySelected) {
@@ -58,7 +59,7 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
 
   const removeReservation = (reservationId: number) => {
     if (token && propertySelected) {
-      deleteReservationService(token, propertySelected.id, reservationId).then((res) => {
+      deleteReservationService(token, propertySelected.id, selectedReservation.id).then((res) => {
         if (res.success) {
           populateReservations();
         } else {
@@ -68,7 +69,7 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const updateReservation = (reservationId: number, updatedData: CreateReservation) => {
+  const updateReservation = (updatedData: CreateReservation) => {
     if (token && propertySelected) {
       updateReservationService(token, propertySelected.id, reservationId, updatedData).then((res) => {
         if (res.success) {
