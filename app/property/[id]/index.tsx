@@ -1,4 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native"
+import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { useEffect } from "react";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from "expo-router";
@@ -19,7 +20,11 @@ export default function Index() {
 
   const { selectedReservation, selectReservation, removeReservation } = useReservation()
 
-  const { today, holidays, styledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
+  const { today, holidays, styledDays, selectedDate, calendarDayPress, calendarMonthChange, setSelectionCalendar } = useCalendar();
+
+  useEffect(() => {
+    setSelectionCalendar(false);
+  }, [])
 
   const propertyEdit = () => {
     router.push(`/property/[id]/edit`);
@@ -73,7 +78,7 @@ export default function Index() {
         </View>
 
         <TouchableOpacity
-          onPress={() => router.push("/property/[id]/reservation/add")}
+          onPress={() => router.push("/property/[id]/reservation/add?selectionCalendar=true")}
           className="w-full bg-green-500 py-3 rounded-2xl items-center justify-center shadow-md my-2"
         >
           <Text className="text-white text-lg font-semibold">

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,10 +12,18 @@ import {
 
 import { useReservation } from "@/src/contexts/reservation/ReservationHook";
 import { useProperty } from "@/src/contexts/property/PropertyHook";
+import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
+
+import Calendar from "@/src/components/Calendar"
 
 export default function AddReservation() {
   const { addReservation } = useReservation();
   const { propertySelected } = useProperty();
+  const { today, styledDaysSelection, selectionPress, setSelectionCalendar, selection } = useCalendar();
+  
+  useEffect(() => {
+    setSelectionCalendar(true);
+  }, [])
 
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -25,6 +34,24 @@ export default function AddReservation() {
   const [observations, setObservations] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  function isoDate(date: Date) {
+    return date.toISOString().split("T")[0];
+  }
+  useEffect(() => {
+    if (selection.length === 2) {
+      if ( isoDate(selection[0]) < isoDate(selection[1])) {
+        setInitDate(isoDate(selection[0]).split("-").reverse().join("/"));
+        setEndDate(isoDate(selection[1]).split("-").reverse().join("/"));
+      } else {
+        setInitDate(isoDate(selection[1]).split("-").reverse().join("/"));
+        setEndDate(isoDate(selection[0]).split("-").reverse().join("/"));
+      }
+    } else {
+      setInitDate(isoDate(selection[0]).split("-").reverse().join("/"))
+      setEndDate("");
+    }
+  }, [selection])
 
   const handleSubmit = async () => {
     if (!name || !contact || !amount || !initDate || !endDate) {
@@ -82,16 +109,20 @@ export default function AddReservation() {
   };
 
   return (
-    <KeyboardAvoidingView
-      className="bg-gray-100 p-5"
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <ScrollView className="flex-1 bg-gray-100 p-5">
+        
+      <Calendar 
+        current={today}
+        markedDates={styledDaysSelection}
+        onDayPress={selectionPress}
+        onMonthChange={() => {return;}}
+      />
+
       <TextInput
         placeholder="Nome do cliente"
         value={name}
         onChangeText={setName}
-        className="border border-gray-300 rounded-lg p-3 mb-4"
+        className="border border-gray-300 rounded-lg p-3 mb-4 mt-4"
       />
 
       <TextInput
@@ -144,12 +175,13 @@ export default function AddReservation() {
       <TouchableOpacity
         onPress={handleSubmit}
         disabled={loading}
-        className="bg-blue-500 p-4 rounded-xl items-center"
+        className="bg-blue-500 p-4 rounded-xl items-center mb-[400px]"
       >
         <Text className="text-white font-bold">
           {loading ? "Salvando..." : "Salvar"}
         </Text>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+
+    </ScrollView>
   );
 }

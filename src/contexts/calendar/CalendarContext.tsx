@@ -9,6 +9,10 @@ type CalendarContextType = {
 	calendarMonthChange: (month: Date) => void;
 	styledDays: { [key: string]: any };
 	reloadStyledDays: () => void;
+	selection: [Date, Date];
+	styledDaysSelection: { [key: string]: any };
+	selectionPress: (date: Date) => void;
+	setSelectionCalendar: (state: boolean) => void;
 };
 
 export const CalendarContext = createContext<CalendarContextType | null>(null);

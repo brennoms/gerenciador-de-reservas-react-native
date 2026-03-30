@@ -1,4 +1,5 @@
 import { useState, useEffect, ReactNode } from "react";
+import {useLocalSearchParams} from "expo-router"
 
 import { CalendarContext } from "./CalendarContext";
 import { useReservation } from "../reservation/ReservationHook";
@@ -17,6 +18,10 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [holidays, setHolidays] = useState<HolydayProps[] | null>(null)
   const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
+
+  const [styledDaysSelection, setStyledDaysSelection] = useState<[{ [key: string]: any }]>([{}]);
+  const [selection, setSelection] = useState([today, today]);
+  const [selectionCalendar, setSelectionCalendar] = useState(false)
   
   const { reservations, selectedReservation } = useReservation();
 
@@ -24,7 +29,11 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
     reloadStyledDays();
 
-  }, [reservations, selectedDate, calendarDate, holidays])
+    if (selectionCalendar) {
+      reloadStyledDaysSelection();
+    }
+
+  }, [reservations, selectedDate, calendarDate, holidays, selection])
 
   useEffect(() => {
 
@@ -142,8 +151,117 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     setStyledDays(newStyledDays);
   }
 
+  const reloadStyledDaysSelection = () => {
+
+    function isoDate(date: Date) {
+      return date.toISOString().split("T")[0];
+    }
+
+    const newStyledDays = {};
+
+    let color = "lightblue";
+    let initDate, endDate;
+
+    if (selection.length === 2) {
+      if ( isoDate(selection[0]) < isoDate(selection[1])) {
+        initDate = selection[0];
+        endDate = selection[1];
+      } else {
+        initDate = selection[1];
+        endDate = selection[0];
+      }
+
+      newStyledDays[isoDate(initDate)] = {
+        startingDay: true,
+        color: color,
+        textColor: "white"
+      }
+      
+      for (const i = new Date(initDate.getTime() + (24 * 60 * 60 * 1000)) ; i < endDate ; i.setDate(i.getDate() + 1)) {
+        newStyledDays[isoDate(i)] = {
+          color: color,
+          textColor: "white"
+        }
+      }
+
+      newStyledDays[isoDate(endDate)] = {
+        endingDay: true,
+        color: color,
+        textColor: "white"
+      }
+    } else {
+      newStyledDays[isoDate(selection[0])] = {
+        startingDay: true,
+        endingDay: true,
+        color: color,
+        textColor: "white"
+      }
+    }
+
+    for (const reservation of reservations) {
+
+      let color = "orange";
+
+      newStyledDays[isoDate(reservation.init_date)] = {
+        startingDay: true,
+        color: color,
+        textColor: "white"
+      }
+      
+      for (const i = new Date(reservation.init_date.getTime() + (24 * 60 * 60 * 1000)) ; i < reservation.end_date ; i.setDate(i.getDate() + 1)) {
+        newStyledDays[isoDate(i)] = {
+          color: color,
+          textColor: "white"
+        }
+      }
+
+      newStyledDays[isoDate(reservation.end_date)] = {
+        endingDay: true,
+        color: color,
+        textColor: "white"
+      }
+
+    }
+
+    if (newStyledDays[isoDate(today)]) {
+      newStyledDays[isoDate(today)].color = "blue"
+      newStyledDays[isoDate(today)].textColor = "white"
+    } else {
+      newStyledDays[isoDate(today)] = {
+        color: "blue",
+        textColor: "white",
+        startingDay: true,
+        endingDay: true
+      }
+    }
+
+    if (holidays) {
+      for (const holiday of holidays) {
+        if (newStyledDays[holiday.date]) {
+          newStyledDays[holiday.date].textColor = "red"
+        } else {
+          newStyledDays[holiday.date] = {
+            textColor: "red"
+          }
+        }
+      }
+
+    }
+
+
+    setStyledDaysSelection(newStyledDays);
+  }
+
+  function selectionPress(date: Date) {
+    if (selection.length >= 2) {
+      setSelection([date]);
+    } else {
+      setSelection([...selection, date]);
+    }
+  }
+
   return (
-    <CalendarContext.Provider value={{ selectedDate, calendarDayPress, calendarDate, calendarMonthChange, styledDays, reloadStyledDays, today}}>
+    <CalendarContext.Provider value={{ selectedDate, calendarDayPress, calendarDate, calendarMonthChange, styledDays, reloadStyledDays, today, selection, styledDaysSelection, selectionPress, setSelectionCalendar}}>
       {children}
     </CalendarContext.Provider>
   );
