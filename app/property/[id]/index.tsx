@@ -117,7 +117,7 @@ export default function Index() {
           : 
             <View className="w-full items-center bg-white rounded-2xl p-4 mb-4 shadow min-h-[200px]">
               <Text className="text-2xl mb-4">
-                {selectedDate.date.toISOString().split("T")[0].split("-").reverse().join("/")}
+                {selectedDate?.date.toISOString().split("T")[0].split("-").reverse().join("/")}
               </Text>
             </View>
           }
