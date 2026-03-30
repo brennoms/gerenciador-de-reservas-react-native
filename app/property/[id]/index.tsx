@@ -44,6 +44,7 @@ export default function Index() {
             enableSwipeMonths={true}
             hideExtraDays={false}
             current={today.toISOString().split('T')[0]}
+            markingType={"period"}
             
             onMonthChange={(month) =>{
               calendarMonthChange(new Date(month.year, month.month - 1, 1));
