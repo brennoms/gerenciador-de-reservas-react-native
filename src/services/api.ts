@@ -4,6 +4,10 @@ export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
+export const apiNoAuth = axios.create({
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
+});
+
 
 let onUnauthorized: (() => void) | null = null;
 
