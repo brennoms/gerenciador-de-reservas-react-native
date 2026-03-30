@@ -105,8 +105,8 @@ export async function getReservationsByPropertyService(
         contact: item.contato,
         deposit: item.sinal,
         amount: item.valor,
-        init_date: item.data_inicio,
-        end_date: item.data_fim,
+        init_date: new Date(item.data_inicio),
+        end_date: new Date(item.data_fim),
         observations: item.observacoes,
       })
     );
