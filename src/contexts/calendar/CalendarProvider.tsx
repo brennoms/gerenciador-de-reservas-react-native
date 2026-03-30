@@ -202,6 +202,10 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
     for (const reservation of reservations) {
 
+      if (selectionCalendar === "edit" && reservation.id === selectedReservation?.id) {
+        continue;
+      }
+
       let color = "orange";
 
       newStyledDays[isoDate(reservation.init_date)] = {

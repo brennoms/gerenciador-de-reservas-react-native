@@ -1,34 +1,93 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   Alert,
-  KeyboardAvoidingView,
   Platform,
 } from "react-native";
 
-
 import { useReservation } from "@/src/contexts/reservation/ReservationHook";
 import { useProperty } from "@/src/contexts/property/PropertyHook";
+import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
-export default function AddReservation() {
+import Calendar from "@/src/components/Calendar";
+
+export default function EditReservation() {
   const { updateReservation, selectedReservation } = useReservation();
   const { propertySelected } = useProperty();
 
+  const {
+    styledDaysSelection,
+    selectionPress,
+    setSelectionCalendar,
+    selection,
+  } = useCalendar();
+
   const [name, setName] = useState(selectedReservation?.name || "");
   const [contact, setContact] = useState(selectedReservation?.contact || "");
-  const [deposit, setDeposit] = useState(String(selectedReservation?.deposit) || "");
-  const [amount, setAmount] = useState(String(selectedReservation?.amount) || "");
+  const [deposit, setDeposit] = useState(
+    String(selectedReservation?.deposit) || ""
+  );
+  const [amount, setAmount] = useState(
+    String(selectedReservation?.amount) || ""
+  );
   const [initDate, setInitDate] = useState(
-    selectedReservation?.init_date.toLocaleDateString("pt-BR", { timeZone: "UTC" }) || ""
+    selectedReservation?.init_date.toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+    }) || ""
   );
   const [endDate, setEndDate] = useState(
-    selectedReservation?.end_date.toLocaleDateString("pt-BR", { timeZone: "UTC" }) || ""
+    selectedReservation?.end_date.toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+    }) || ""
   );
-  const [observations, setObservations] = useState(selectedReservation?.observations || "");
+  const [observations, setObservations] = useState(
+    selectedReservation?.observations || ""
+  );
 
   const [loading, setLoading] = useState(false);
+
+  function isoDate(date: Date) {
+    return date.toISOString().split("T")[0];
+  }
+
+  useEffect(() => {
+    setSelectionCalendar("edit");
+  }, []);
+
+  useEffect(() => {
+    if (selection.length === 2) {
+      if (isoDate(selection[0]) < isoDate(selection[1])) {
+        setInitDate(
+          isoDate(selection[0]).split("-").reverse().join("/")
+        );
+        setEndDate(
+          isoDate(selection[1]).split("-").reverse().join("/")
+        );
+      } else {
+        setInitDate(
+          isoDate(selection[1]).split("-").reverse().join("/")
+        );
+        setEndDate(
+          isoDate(selection[0]).split("-").reverse().join("/")
+        );
+      }
+    } else if (selection.length === 1) {
+      setInitDate(
+        isoDate(selection[0]).split("-").reverse().join("/")
+      );
+      setEndDate("");
+    }
+  }, [selection]);
+
+  useEffect(() => {
+    if (selectedReservation) {
+      selectionPress(selectedReservation.init_date);
+      selectionPress(selectedReservation.end_date);
+    }
+  }, []);
 
   const handleSubmit = async () => {
     if (!name || !contact || !amount || !initDate || !endDate) {
@@ -55,8 +114,12 @@ export default function AddReservation() {
       contact,
       deposit: Number(deposit) || 0,
       amount: Number(amount),
-      init_date: new Date(initDate.split("/").reverse().join("-")),
-      end_date: new Date(endDate.split("/").reverse().join("-")),
+      init_date: new Date(
+        initDate.split("/").reverse().join("-")
+      ),
+      end_date: new Date(
+        endDate.split("/").reverse().join("-")
+      ),
       observations,
     };
 
@@ -86,16 +149,19 @@ export default function AddReservation() {
   };
 
   return (
-    <KeyboardAvoidingView
-      className="bg-gray-100 p-5"
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <ScrollView className="flex-1 bg-gray-100 p-5">
+      <Calendar
+        current={selectedReservation.init_date || new Date()}
+        markedDates={styledDaysSelection}
+        onDayPress={selectionPress}
+        onMonthChange={() => {}}
+      />
+
       <TextInput
         placeholder="Nome do cliente"
         value={name}
         onChangeText={setName}
-        className="border border-gray-300 rounded-lg p-3 mb-4"
+        className="border border-gray-300 rounded-lg p-3 mb-4 mt-4"
       />
 
       <TextInput
@@ -148,12 +214,12 @@ export default function AddReservation() {
       <TouchableOpacity
         onPress={handleSubmit}
         disabled={loading}
-        className="bg-blue-500 p-4 rounded-xl items-center"
+        className="bg-blue-500 p-4 rounded-xl items-center mb-[400px]"
       >
         <Text className="text-white font-bold">
           {loading ? "Salvando..." : "Salvar"}
         </Text>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
