@@ -72,7 +72,16 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
-        <View className="w-full h-min">
+        <TouchableOpacity
+          onPress={() => router.push("/property/[id]/reservation/add")}
+          className="w-full bg-green-500 py-3 rounded-2xl items-center justify-center shadow-md my-2"
+        >
+          <Text className="text-white text-lg font-semibold">
+            + Adicionar Reserva
+          </Text>
+        </TouchableOpacity>
+
+        <View className="w-full h-min mb-4">
           <Calendar
             style={{ borderRadius: 10 }}
             enableSwipeMonths={true}
@@ -85,9 +94,6 @@ export default function Index() {
             markedDates={styledDays}
 
           />
-          <TouchableOpacity onPress={() => router.push("/property/[id]/reservation/add")} className="self-end rounded-lg mr-4">
-            <Ionicons name="add-circle" size={48} color="lightgreen" />
-          </TouchableOpacity>
         </View>
 
         <View className="w-full h-min items-center">

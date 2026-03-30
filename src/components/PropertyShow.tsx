@@ -6,7 +6,7 @@ import { PropertyProps } from "../types/property.types";
 export default function PropertyShow({ id, image, name, address, className }: PropertyProps & { className?: string }) {
   return (
     <View 
-      className={className ? className : "bg-white rounded-xl mb-4 overflow-hidden"}
+      className={className ? className : "bg-white rounded-xl overflow-hidden"}
     >
 
       <Image
