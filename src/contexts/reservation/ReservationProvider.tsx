@@ -64,11 +64,12 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const removeReservation = (reservationId: number) => {
+  const removeReservation = () => {
     if (token && propertySelected) {
       deleteReservationService(token, propertySelected.id, selectedReservation.id).then((res) => {
         if (res.success) {
           populateReservations();
+          alert("reserva removida!");
         } else {
           alert(res.message || "Failed to remove reservation");
         }

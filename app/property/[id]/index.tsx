@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from "expo-router";
@@ -17,7 +17,7 @@ export default function Index() {
 
   const { propertySelected } = useProperty();
 
-  const { selectedReservation, selectReservation } = useReservation()
+  const { selectedReservation, selectReservation, removeReservation } = useReservation()
 
   const { today, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
 
@@ -33,6 +33,25 @@ export default function Index() {
 
   function handleMonth(month) {
     calendarMonthChange(new Date(month.year, month.month - 1, 1));
+  }
+
+  function handleDeleteReservation() {
+    Alert.alert(
+      "Confirmação",
+      "Você tem certeza que deseja excluir?",
+      [
+        {
+          text: "Não",
+          style: "cancel",
+          onPress: () => {return;},
+        },
+        {
+          text: "Sim",
+          onPress: () => removeReservation(),
+        },
+      ],
+      { cancelable: true }
+    );
   }
 
   return propertySelected ? 
@@ -76,9 +95,16 @@ export default function Index() {
           {selectedReservation ? 
             <>
               <ReservationCard reservation={selectedReservation} /> 
-              <TouchableOpacity onPress={() => router.push("/property/[id]/reservation/edit")} className="absolute top-3 left-3 px-2 rounded-lg bg-blue-100">
-                <AntDesign name="edit" size={32} color="black" />
-              </TouchableOpacity>
+              <View className="absolute top-3 left-3 px-2">
+                <View className="flex-col">
+                  <TouchableOpacity onPress={() => router.push("/property/[id]/reservation/edit")} className="rounded-lg bg-blue-100 mb-2">
+                    <AntDesign name="edit" size={32} color="black" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDeleteReservation()} className="rounded-lg bg-red-100 items-center py-1">
+                    <Ionicons name="trash" size={28} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </>
           : 
             <></>
