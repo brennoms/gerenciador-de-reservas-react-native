@@ -13,7 +13,7 @@ export async function getReservationsService(
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    const reservations: ReservationsProps[] = res.data.reservas.map(
+    const reservations: ReservationsProps[] = res.data.map(
       (item: any) => ({
         id: item._id,
         user_id: item.usuario_id,
@@ -89,16 +89,14 @@ export async function getReservationsByPropertyService(
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log(res.data);
-
-    if (!res.data.reservas) {
+    if (!res.data) {
       return {
         success: true,
         data: [],
       };
     }
 
-    const reservations: ReservationsProps[] = res.data.reservas.map(
+    const reservations: ReservationsProps[] = res.data.map(
       (item: any) => ({
         id: item._id,
         user_id: item.usuario_id,
