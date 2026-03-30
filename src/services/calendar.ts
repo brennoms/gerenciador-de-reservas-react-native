@@ -1,8 +1,13 @@
-import { api, logError, getErrorMessage, ServiceResponse } from './api';
+import { 
+    api, 
+    apiNoAuth,
+    logError, 
+    getErrorMessage, 
+    ServiceResponse,
+} from './api';
 
-import { CalendarProps } from '../types/calendar.types';
+import { CalendarProps, HolidayProps } from '../types/calendar.types';
 import { ReservationProps } from 'react-native-calendars/src/agenda/reservation-list/reservation';
-
 
 function mapCalendarData(data: any): CalendarProps {
   return data.map((month: any) => ({
@@ -58,6 +63,34 @@ export async function getCalendarService(
         return {
             success: true,
             data: calendarData,
+        };
+
+    } catch (error) {
+        logError("calendarService", error);
+
+        return {
+            success: false,
+            message: getErrorMessage(error),
+        };
+    }
+
+}
+
+export async function getHolidaysService(token: string, year: Number): 
+    Promise<ServiceResponse<HolidayProps[]>> {
+    
+    try {
+        const res = await apiNoAuth.get(`/calendario/feriados`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: {
+                ano: year,
+                estado: "RJ",
+            }
+        });
+
+        return {
+            success: true,
+            data: res.data,
         };
 
     } catch (error) {

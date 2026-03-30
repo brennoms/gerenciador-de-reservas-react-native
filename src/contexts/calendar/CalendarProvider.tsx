@@ -2,13 +2,20 @@ import { useState, useEffect, ReactNode } from "react";
 
 import { CalendarContext } from "./CalendarContext";
 import { useReservation } from "../reservation/ReservationHook";
+import { useAuth } from "../auth/AuthHook";
+
+import { HolydayProps } from "@/src/types/calendar.types"
+import { getHolidaysService } from "@/src/services/calendar"
 
 
 export function CalendarProvider({ children }: { children: ReactNode }) {
 
+  const { token } = useAuth()
+
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarDate, setCalendarDate] = useState(new Date());
+  const [holidays, setHolidays] = useState<HolydayProps[] | null>(null)
   const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
   
   const { reservations, selectedReservation } = useReservation();
@@ -19,11 +26,32 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
   }, [reservations, selectedDate])
 
+  useEffect(() => {
+
+    if (token) {
+      getHolidaysService(token, today.toISOString().split("T")[0].split("-")[0])
+      .then((res) => {
+        setHolidays(res.data);
+      })
+    }
+
+  }, [])
+
   const calendarDayPress = (day: Date) => {
     setSelectedDate(day);
   }
 
   const calendarMonthChange = (month: Date) => {
+    function getYear(date: Date) {
+      return date.toISOString().split("T")[0].split("-")[0];
+    }
+
+    if (getYear(month) !== getYear(calendarDate)) {
+      getHolidaysService(token, Number(getYear(month)))
+      .then((res) => {
+        setHolidays(res.data)
+      })
+    }
     setCalendarDate(month);
   }
 
@@ -87,6 +115,20 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
         startingDay: true,
         endingDay: true
       }
+    }
+
+    if (holidays) {
+
+      for (const holiday of holidays) {
+        if (newStyledDays[holiday.date]) {
+          newStyledDays.textColor = "red"
+        } else {
+          newStyledDays[holiday.date] = {
+            textColor: "red"
+          }
+        }
+      }
+
     }
 
     setStyledDays(newStyledDays);
