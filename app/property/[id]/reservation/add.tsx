@@ -51,7 +51,7 @@ export default function AddReservation() {
 
     const result = addReservation(reservation);
 
-    setLoading(false);
+    setLoading(result);
   };
 
   return (
@@ -60,7 +60,6 @@ export default function AddReservation() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      {/* Nome */}
       <TextInput
         placeholder="Nome do cliente"
         value={name}
@@ -68,7 +67,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Contato */}
       <TextInput
         placeholder="Contato"
         value={contact}
@@ -76,7 +74,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Valor total */}
       <TextInput
         placeholder="Valor total"
         value={amount}
@@ -85,7 +82,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Sinal */}
       <TextInput
         placeholder="Sinal (opcional)"
         value={deposit}
@@ -94,7 +90,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Data início */}
       <TextInput
         placeholder="Data início (YYYY-MM-DD)"
         value={initDate}
@@ -102,7 +97,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Data fim */}
       <TextInput
         placeholder="Data fim (YYYY-MM-DD)"
         value={endDate}
@@ -110,7 +104,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
-      {/* Observações */}
       <TextInput
         placeholder="Observações"
         value={observations}
@@ -119,7 +112,6 @@ export default function AddReservation() {
         className="border border-gray-300 rounded-lg p-3 mb-6"
       />
 
-      {/* Botão */}
       <TouchableOpacity
         onPress={handleSubmit}
         disabled={loading}
