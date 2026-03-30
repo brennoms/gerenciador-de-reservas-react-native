@@ -24,7 +24,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
     reloadStyledDays();
 
-  }, [reservations, selectedDate])
+  }, [reservations, selectedDate, calendarDate, holidays])
 
   useEffect(() => {
 
