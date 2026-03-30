@@ -60,11 +60,29 @@ export default function AddReservation() {
       observations,
     };
 
-    console.log(reservation)
-
     const result = updateReservation(reservation);
 
     setLoading(result);
+  };
+
+  const formatDate = (text: string) => {
+    const cleaned = text.replace(/\D/g, "");
+
+    let formatted = cleaned;
+
+    if (cleaned.length > 2) {
+      formatted = cleaned.slice(0, 2) + "/" + cleaned.slice(2);
+    }
+    if (cleaned.length > 4) {
+      formatted =
+        cleaned.slice(0, 2) +
+        "/" +
+        cleaned.slice(2, 4) +
+        "/" +
+        cleaned.slice(4, 8);
+    }
+
+    return formatted;
   };
 
   return (
@@ -104,16 +122,18 @@ export default function AddReservation() {
       />
 
       <TextInput
-        placeholder="Data início (YYYY-MM-DD)"
+        placeholder="Data início (DD/MM/AAAA)"
+        keyboardType="numeric"
         value={initDate}
-        onChangeText={setInitDate}
+        onChangeText={(text) => setInitDate(formatDate(text))}
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
       <TextInput
-        placeholder="Data fim (YYYY-MM-DD)"
+        placeholder="Data fim (DD/MM/AAAA)"
+        keyboardType="numeric"
         value={endDate}
-        onChangeText={setEndDate}
+        onChangeText={(text) => setEndDate(formatDate(text))}
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
