@@ -11,13 +11,19 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
   
-  const { reservations } = useReservation();
+  const { reservations, selectedReservation } = useReservation();
 
   useEffect(() => {
 
     reloadStyledDays();
 
   }, [reservations])
+
+  useEffect(() => {
+
+    reloadStyledDays();
+
+  }, [selectedDate])
 
   const calendarDayPress = (day: Date) => {
     setSelectedDate(day);
@@ -32,22 +38,29 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
 
     for (const reservation of reservations) {
 
+      let color = "";
+      if (reservation.id === selectedReservation?.id){
+        color = "orange";
+      } else {
+        color = "blue";
+      }
+
       newStyledDays[reservation.init_date.toISOString().split("T")[0]] = {
         startingDay: true,
-        color: "blue",
+        color: color,
         textColor: "white"
       }
       
       for (const i = new Date(reservation.init_date.getTime() + (24 * 60 * 60 * 1000)) ; i < reservation.end_date ; i.setDate(i.getDate() + 1)) {
         newStyledDays[i.toISOString().split("T")[0]] = {
-          color: "blue",
+          color: color,
           textColor: "white"
         }
       }
 
       newStyledDays[reservation.end_date.toISOString().split("T")[0]] = {
         endingDay: true,
-        color: "blue",
+        color: color,
         textColor: "white"
       }
 
