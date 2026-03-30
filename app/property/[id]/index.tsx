@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from "expo-router";
-import { Calendar } from "react-native-calendars";
+import Calendar from "@/src/components/Calendar";
 
 import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
@@ -19,7 +19,7 @@ export default function Index() {
 
   const { selectedReservation, selectReservation, removeReservation } = useReservation()
 
-  const { today, holidays, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
+  const { today, holidays, styledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
 
   const propertyEdit = () => {
     router.push(`/property/[id]/edit`);
@@ -82,17 +82,11 @@ export default function Index() {
         </TouchableOpacity>
 
         <View className="w-full h-min">
-          <Calendar
-            style={{ borderRadius: 10 }}
-            enableSwipeMonths={true}
-            hideExtraDays={false}
-            current={today.toISOString().split('T')[0]}
-            markingType={"period"}
-            
-            onMonthChange={(month) => handleMonth(month)}
-            onDayPress={(day) => handleDay(day)}
+          <Calendar 
+            current={today}
             markedDates={styledDays}
-
+            onDayPress={calendarDayPress}
+            onMonChange={calendarMonthChange}
           />
         </View>
 
