@@ -1,28 +1,24 @@
 import { Stack } from "expo-router";
-import { CalendarProvider } from "@/src/contexts/calendar/CalendarProvider";
-import { ReservationProvider } from "@/src/contexts/reservation/ReservationProvider";
 
 export default function RootLayout() {
 
   return (
-      <ReservationProvider>
-      <CalendarProvider>
-        <Stack
-            screenOptions={
+    <Stack
+        screenOptions={
 
-              ({route}) => {
-                if (route.name === "edit") {
-                  return { title: "editar propriedade" }
-                } else if (route.name === "add") {
-                  return { title: "Adicionar Reserva" }
-                }else {
-                  return { title: "Propriedade" }
-                }
-              }
-
+          ({route}) => {
+            if (route.name === "edit") {
+              return { title: "editar propriedade" }
+            } else if (route.name === "reservation/add") {
+              return { title: "Adicionar Reserva" }
+            } else if (route.name === "reservation/edit") {
+              return { title: "Editar Reserva" }
+            } else {
+              return { title: "Propriedade" }
             }
-          />
-      </CalendarProvider>
-      </ReservationProvider>
+          }
+
+        }
+      />
     )
 }
