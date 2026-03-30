@@ -8,6 +8,7 @@ import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
 import { useReservation } from "@/src/contexts/reservation/ReservationHook";
+import { ReservationCard } from "@/src/components/ReservationCard";
 
 import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
@@ -75,8 +76,8 @@ export default function Index() {
           <Text className="text-2xl">Data Selecionada:</Text>
           
           <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
-          <Text>{JSON.stringify(selectedReservation)}</Text>
-
+          
+          {selectedReservation ? <ReservationCard reservation={selectedReservation} /> : <></>}
 
         </View>
 
