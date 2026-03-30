@@ -19,7 +19,7 @@ export default function Index() {
 
   const { selectedReservation, selectReservation, removeReservation } = useReservation()
 
-  const { today, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
+  const { today, holidays, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
 
   const propertyEdit = () => {
     router.push(`/property/[id]/edit`);
@@ -81,7 +81,7 @@ export default function Index() {
           </Text>
         </TouchableOpacity>
 
-        <View className="w-full h-min mb-4">
+        <View className="w-full h-min">
           <Calendar
             style={{ borderRadius: 10 }}
             enableSwipeMonths={true}
@@ -95,6 +95,14 @@ export default function Index() {
 
           />
         </View>
+
+        {selectedDate?.holiday ? 
+            <Text className="text-center text-xl text-red-400 my-2">
+              {selectedDate.holiday.name}
+            </Text> 
+          : 
+            <View className="my-6"></View>
+        }
 
         <View className="w-full h-min items-center">
           
@@ -113,7 +121,11 @@ export default function Index() {
               </View>
             </>
           : 
-            <></>
+            <View className="w-full items-center bg-white rounded-2xl p-4 mb-4 shadow min-h-[200px]">
+              <Text className="text-2xl mb-4">
+                {selectedDate.date.toISOString().split("T")[0].split("-").reverse().join("/")}
+              </Text>
+            </View>
           }
 
         </View>

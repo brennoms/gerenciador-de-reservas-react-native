@@ -1,7 +1,8 @@
 import { createContext } from "react";
+import { HolydayProps } from "@/src/types/calendar.types"
 
 type CalendarContextType = {
-	today: Date;
+	today: {date: Date, holiday: HolydayProps};
 	selectedDate: Date;
 	calendarDayPress: (day: Date) => void;
 	calendarDate: Date;

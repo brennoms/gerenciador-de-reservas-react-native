@@ -13,7 +13,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const { token } = useAuth()
 
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [holidays, setHolidays] = useState<HolydayProps[] | null>(null)
   const [styledDays, setStyledDays] = useState<[{ [key: string]: any }]>([{}]);
@@ -35,10 +35,17 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
       })
     }
 
+    calendarDayPress(today)
+
   }, [])
 
   const calendarDayPress = (day: Date) => {
-    setSelectedDate(day);
+    if (holidays ){
+      const holiday = holidays.find(item => item.date === day.toISOString().split("T")[0]);
+      setSelectedDate({date: day, holiday});
+    } else {
+      setSelectedDate({date: day});
+    }
   }
 
   const calendarMonthChange = (month: Date) => {
@@ -105,15 +112,17 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    if (newStyledDays[isoDate(selectedDate)]) {
-      newStyledDays[isoDate(selectedDate)].color = `dark${newStyledDays[isoDate(selectedDate)].color}`
-      newStyledDays[isoDate(selectedDate)].textColor = "white"
-    } else {
-      newStyledDays[isoDate(selectedDate)] = {
-        color: "gray",
-        textColor: "white",
-        startingDay: true,
-        endingDay: true
+    if (selectedDate){
+      if (newStyledDays[isoDate(selectedDate.date)]) {
+        newStyledDays[isoDate(selectedDate.date)].color = `dark${newStyledDays[isoDate(selectedDate.date)].color}`
+        newStyledDays[isoDate(selectedDate.date)].textColor = "white"
+      } else {
+        newStyledDays[isoDate(selectedDate.date)] = {
+          color: "gray",
+          textColor: "white",
+          startingDay: true,
+          endingDay: true
+        }
       }
     }
 
@@ -135,7 +144,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <CalendarContext.Provider value={{ selectedDate, calendarDayPress, calendarDate, calendarMonthChange, styledDays, reloadStyledDays,today }}>
+    <CalendarContext.Provider value={{ selectedDate, calendarDayPress, calendarDate, calendarMonthChange, styledDays, reloadStyledDays, today}}>
       {children}
     </CalendarContext.Provider>
   );
