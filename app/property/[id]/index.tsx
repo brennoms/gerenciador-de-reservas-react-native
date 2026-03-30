@@ -7,6 +7,8 @@ import { Calendar } from "react-native-calendars";
 import { useProperty } from "@/src/contexts/property/PropertyHook";
 import PropertyShow from "@/src/components/PropertyShow";
 
+import { useReservation } from "@/src/contexts/reservation/ReservationHook";
+
 import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
 
@@ -14,10 +16,22 @@ export default function Index() {
 
   const { propertySelected } = useProperty();
 
+  const { selectedReservation, selectReservation } = useReservation()
+
   const { today, styledDays, reloadStyledDays, selectedDate, calendarDayPress, calendarMonthChange } = useCalendar();
 
   const propertyEdit = () => {
     router.push(`/property/[id]/edit`);
+  }
+
+  function handleDay(day) {
+      const [ano, mes, dia] = day.dateString.split("-").map(Number);
+      calendarDayPress(new Date(ano, mes - 1, dia));
+      selectReservation(new Date(ano, mes-1, dia));
+  }
+
+  function handleMonth(month) {
+    calendarMonthChange(new Date(month.year, month.month - 1, 1));
   }
 
   return propertySelected ? 
@@ -46,13 +60,8 @@ export default function Index() {
             current={today.toISOString().split('T')[0]}
             markingType={"period"}
             
-            onMonthChange={(month) =>{
-              calendarMonthChange(new Date(month.year, month.month - 1, 1));
-            }}
-            onDayPress={(day) => {
-              const [ano, mes, dia] = day.dateString.split("-").map(Number);
-              calendarDayPress(new Date(ano, mes - 1, dia));
-            }}
+            onMonthChange={(month) => handleMonth(month)}
+            onDayPress={(day) => handleDay(day)}
             markedDates={styledDays}
 
           />
@@ -66,7 +75,7 @@ export default function Index() {
           <Text className="text-2xl">Data Selecionada:</Text>
           
           <Text className="text-xl color-gray-500">{selectedDate.toLocaleDateString('pt-BR')}</Text>
-          <Text>url: {String(process.env.EXPO_PUBLIC_API_URL)}</Text>
+          <Text>{JSON.stringify(selectedReservation)}</Text>
 
 
         </View>

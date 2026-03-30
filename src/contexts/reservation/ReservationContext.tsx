@@ -6,6 +6,8 @@ type ReservationContextType = {
   addReservation: (reservation: CreateReservation) => void;
   removeReservation: (reservationId: number) => void;
   updateReservation: (reservationId: number, updatedData: CreateReservation) => void;
+  selectedReservation: ReservationsProps | null;
+  selectReservation: (date: Date) => void;
 };
 
 export const ReservationContext = createContext<ReservationContextType | null>(null);

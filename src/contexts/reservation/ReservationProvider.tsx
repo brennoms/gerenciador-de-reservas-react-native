@@ -20,6 +20,7 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
   const { propertySelected } = useProperty();
 
   const [reservations, setReservations] = useState<ReservationsProps[]>([]);
+  const [selectedReservation, setSelectedReservation] = useState<ReservationsProps | null>(null)
 
   useEffect(() => {
     if (token && propertySelected) {
@@ -79,9 +80,24 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const selectReservation = (date: Date) => {
+    let select = false;
+    for (const reservation of reservations) {
+      for (const i = new Date(reservation.init_date.getTime()) ; i <= reservation.end_date ; i.setDate(i.getDate() + 1)) {
+        if (i.toISOString().split("T")[0] === date.toISOString().split("T")[0]) {
+          select = true;
+          setSelectedReservation( reservation );
+          return;
+        }
+      }
+    }
+
+    setSelectedReservation(null);
+
+  }
 
   return (
-    <ReservationContext.Provider value={{ reservations, addReservation, removeReservation, updateReservation }}>
+    <ReservationContext.Provider value={{ reservations, addReservation, removeReservation, updateReservation, selectedReservation, selectReservation }}>
       {children}
     </ReservationContext.Provider>
   );
