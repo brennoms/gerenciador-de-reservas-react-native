@@ -23,7 +23,7 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
   const [selection, setSelection] = useState([today, today]);
   const [selectionCalendar, setSelectionCalendar] = useState(false)
   
-  const { reservations, selectedReservation } = useReservation();
+  const { reservations, selectedReservation, selectReservation } = useReservation();
 
   useEffect(() => {
 
@@ -52,8 +52,10 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     if (holidays ){
       const holiday = holidays.find(item => item.date === day.toISOString().split("T")[0]);
       setSelectedDate({date: day, holiday});
+      selectReservation(day)
     } else {
       setSelectedDate({date: day});
+      selectReservation(day)
     }
   }
 
