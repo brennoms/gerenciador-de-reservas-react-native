@@ -127,10 +127,9 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     }
 
     if (holidays) {
-
       for (const holiday of holidays) {
         if (newStyledDays[holiday.date]) {
-          newStyledDays.textColor = "red"
+          newStyledDays[holiday.date].textColor = "red"
         } else {
           newStyledDays[holiday.date] = {
             textColor: "red"
