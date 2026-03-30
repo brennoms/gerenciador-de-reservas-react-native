@@ -21,13 +21,18 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
 
   const [reservations, setReservations] = useState<ReservationsProps[]>([]);
   const [selectedReservation, setSelectedReservation] = useState<ReservationsProps | null>(null)
-  console.log(selectedReservation)
 
   useEffect(() => {
     if (token && propertySelected) {
       populateReservations();
     }
   }, [propertySelected]);
+
+  useEffect(() => {
+    if (token && propertySelected && selectedReservation) {
+      setSelectedReservation(reservations.find(item => item.id === selectedReservation.id))
+    }
+  }, [reservations]);
 
   const populateReservations = () => {
     if (token && propertySelected) {
@@ -48,10 +53,12 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
       createReservationService(token, propertySelected.id, reservation).then((res) => {
         if (res.success) {
           alert("Reserva criada com sucesso!");
-          router.back();
           populateReservations();
+          router.back();
+          return true;
         } else {
           alert(res.message || "Failed to add reservation");
+          return false;
         }
       });
     }
@@ -71,11 +78,15 @@ export function ReservationProvider({ children }: { children: ReactNode }) {
 
   const updateReservation = (updatedData: CreateReservation) => {
     if (token && propertySelected) {
-      updateReservationService(token, propertySelected.id, reservationId, updatedData).then((res) => {
+      updateReservationService(token, propertySelected.id, selectedReservation.id, updatedData).then((res) => {
         if (res.success) {
           populateReservations();
+          alert("Reserva Alterada");
+          router.back();
+          return true;
         } else {
           alert(res.message || "Failed to update reservation");
+          return false;
         }
       });
     }
