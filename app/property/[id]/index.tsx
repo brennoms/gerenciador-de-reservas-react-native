@@ -86,7 +86,7 @@ export default function Index() {
             current={today}
             markedDates={styledDays}
             onDayPress={calendarDayPress}
-            onMonChange={calendarMonthChange}
+            onMonthChange={calendarMonthChange}
           />
         </View>
 
