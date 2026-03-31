@@ -55,6 +55,10 @@ export default function EditReservation() {
 
   useEffect(() => {
     setSelectionCalendar("edit");
+    if (selectedReservation) {
+      selectionPress(selectedReservation.init_date);
+      selectionPress(selectedReservation.end_date);
+    }
   }, []);
 
   useEffect(() => {
@@ -81,13 +85,6 @@ export default function EditReservation() {
       setEndDate("");
     }
   }, [selection]);
-
-  useEffect(() => {
-    if (selectedReservation) {
-      selectionPress(selectedReservation.init_date);
-      selectionPress(selectedReservation.end_date);
-    }
-  }, []);
 
   const handleSubmit = async () => {
     if (!name || !contact || !amount || !initDate || !endDate) {
