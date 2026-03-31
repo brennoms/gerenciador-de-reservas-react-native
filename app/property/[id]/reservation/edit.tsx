@@ -56,8 +56,7 @@ export default function EditReservation() {
   useEffect(() => {
     setSelectionCalendar("edit");
     if (selectedReservation) {
-      selectionPress(selectedReservation.init_date);
-      selectionPress(selectedReservation.end_date);
+      selectionPress([selectedReservation.init_date, selectedReservation.end_date]);
     }
   }, []);
 

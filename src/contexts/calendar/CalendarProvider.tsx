@@ -264,8 +264,10 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     setStyledDaysSelection(newStyledDays);
   }
 
-  function selectionPress(date: Date) {
-    if (selection.length >= 2) {
+  function selectionPress(date: Date | [Date, Date]) {
+    if (date.length === 2) {
+      setSelection(date);
+    } else if (selection.length >= 2) {
       setSelection([date]);
     } else {
       setSelection([...selection, date]);
