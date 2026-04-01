@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
+  View,
   Text,
   TextInput,
   TouchableOpacity,
@@ -120,6 +121,26 @@ export default function AddReservation() {
         onMonthChange={() => {return;}}
       />
 
+      <View className="flex-row w-max-[100vw] mt-4 gap-2">
+        <TextInput
+          placeholder="Data início (DD/MM/AAAA)"
+          placeholderTextColor="gray"
+          keyboardType="numeric"
+          value={initDate}
+          onChangeText={(text) => setInitDate(formatDate(text))}
+          className="border border-gray-300 rounded-lg p-3 flex-1"
+        />
+
+        <TextInput
+          placeholder="Data fim (DD/MM/AAAA)"
+          placeholderTextColor="gray"
+          keyboardType="numeric"
+          value={endDate}
+          onChangeText={(text) => setEndDate(formatDate(text))}
+          className="border border-gray-300 rounded-lg p-3 flex-1"
+        />
+      </View>
+
       <TextInput
         placeholder="Nome do cliente"
         placeholderTextColor="gray"
@@ -151,24 +172,6 @@ export default function AddReservation() {
         value={deposit}
         onChangeText={setDeposit}
         keyboardType="numeric"
-        className="border border-gray-300 rounded-lg p-3 mb-4"
-      />
-
-      <TextInput
-        placeholder="Data início (DD/MM/AAAA)"
-        placeholderTextColor="gray"
-        keyboardType="numeric"
-        value={initDate}
-        onChangeText={(text) => setInitDate(formatDate(text))}
-        className="border border-gray-300 rounded-lg p-3 mb-4"
-      />
-
-      <TextInput
-        placeholder="Data fim (DD/MM/AAAA)"
-        placeholderTextColor="gray"
-        keyboardType="numeric"
-        value={endDate}
-        onChangeText={(text) => setEndDate(formatDate(text))}
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 
