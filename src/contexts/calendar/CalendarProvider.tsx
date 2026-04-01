@@ -118,11 +118,11 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     }
 
     if (newStyledDays[isoDate(today)]) {
-      newStyledDays[isoDate(today)].color = "blue"
+      newStyledDays[isoDate(today)].color = "green"
       newStyledDays[isoDate(today)].textColor = "white"
     } else {
       newStyledDays[isoDate(today)] = {
-        color: "blue",
+        color: "green",
         textColor: "white",
         startingDay: true,
         endingDay: true
@@ -236,11 +236,11 @@ export function CalendarProvider({ children }: { children: ReactNode }) {
     }
 
     if (newStyledDays[isoDate(today)]) {
-      newStyledDays[isoDate(today)].color = "blue"
+      newStyledDays[isoDate(today)].color = "green"
       newStyledDays[isoDate(today)].textColor = "white"
     } else {
       newStyledDays[isoDate(today)] = {
-        color: "blue",
+        color: "green",
         textColor: "white",
         startingDay: true,
         endingDay: true

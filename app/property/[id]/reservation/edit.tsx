@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
+  View,
   Text,
   TextInput,
   TouchableOpacity,
@@ -13,6 +14,8 @@ import { useProperty } from "@/src/contexts/property/PropertyHook";
 import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
 import Calendar from "@/src/components/Calendar";
+
+import { stringToNumber } from "@/src/utils/number.utils";
 
 export default function EditReservation() {
   const { updateReservation, selectedReservation } = useReservation();
@@ -108,8 +111,8 @@ export default function EditReservation() {
     const reservation = {
       name,
       contact,
-      deposit: Number(deposit) || 0,
-      amount: Number(amount),
+      deposit: stringToNumber(deposit) || 0,
+      amount: stringToNumber(amount),
       init_date: new Date(
         initDate.split("/").reverse().join("-")
       ),
@@ -153,6 +156,26 @@ export default function EditReservation() {
         onMonthChange={() => {}}
       />
 
+      <View className="flex-row w-max-[100vw] mt-4 gap-2">
+        <TextInput
+          placeholder="Data início (DD/MM/AAAA)"
+          placeholderTextColor="gray"
+          keyboardType="numeric"
+          value={initDate}
+          onChangeText={(text) => setInitDate(formatDate(text))}
+          className="border border-gray-300 rounded-lg p-3 flex-1"
+        />
+
+        <TextInput
+          placeholder="Data fim (DD/MM/AAAA)"
+          placeholderTextColor="gray"
+          keyboardType="numeric"
+          value={endDate}
+          onChangeText={(text) => setEndDate(formatDate(text))}
+          className="border border-gray-300 rounded-lg p-3 flex-1"
+        />
+      </View>
+
       <TextInput
         placeholder="Nome do cliente"
         placeholderTextColor="gray"
@@ -184,24 +207,6 @@ export default function EditReservation() {
         value={deposit}
         onChangeText={setDeposit}
         keyboardType="numeric"
-        className="border border-gray-300 rounded-lg p-3 mb-4"
-      />
-
-      <TextInput
-        placeholder="Data início (DD/MM/AAAA)"
-        placeholderTextColor="gray"
-        keyboardType="numeric"
-        value={initDate}
-        onChangeText={(text) => setInitDate(formatDate(text))}
-        className="border border-gray-300 rounded-lg p-3 mb-4"
-      />
-
-      <TextInput
-        placeholder="Data fim (DD/MM/AAAA)"
-        placeholderTextColor="gray"
-        keyboardType="numeric"
-        value={endDate}
-        onChangeText={(text) => setEndDate(formatDate(text))}
         className="border border-gray-300 rounded-lg p-3 mb-4"
       />
 

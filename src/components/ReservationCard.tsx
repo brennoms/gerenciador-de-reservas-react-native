@@ -39,7 +39,7 @@ export function ReservationCard({ reservation }: Props) {
           Total: R$ {Number(reservation.amount).toFixed(2)}
         </Text>
         <Text className="text-lg text-blue-600">
-          Entrada: R$ {Number(reservation.deposit).toFixed(2)}
+          Sinal: R$ {Number(reservation.deposit).toFixed(2)}
         </Text>
       </View>
 
