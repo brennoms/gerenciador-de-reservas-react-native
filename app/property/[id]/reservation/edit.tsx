@@ -14,6 +14,8 @@ import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
 import Calendar from "@/src/components/Calendar";
 
+import { stringToNumber } from "@/src/utils/number.utils";
+
 export default function EditReservation() {
   const { updateReservation, selectedReservation } = useReservation();
   const { propertySelected } = useProperty();
@@ -108,8 +110,8 @@ export default function EditReservation() {
     const reservation = {
       name,
       contact,
-      deposit: Number(deposit) || 0,
-      amount: Number(amount),
+      deposit: stringToNumber(deposit) || 0,
+      amount: stringToNumber(amount),
       init_date: new Date(
         initDate.split("/").reverse().join("-")
       ),

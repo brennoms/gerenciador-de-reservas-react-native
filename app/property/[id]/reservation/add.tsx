@@ -15,6 +15,9 @@ import { useCalendar } from "@/src/contexts/calendar/CalendarHook";
 
 import Calendar from "@/src/components/Calendar"
 
+import { stringToNumber } from "@/src/utils/number.utils";
+
+
 export default function AddReservation() {
   const { addReservation } = useReservation();
   const { propertySelected } = useProperty();
@@ -75,8 +78,8 @@ export default function AddReservation() {
     const reservation = {
       name,
       contact,
-      deposit: Number(deposit) || 0,
-      amount: Number(amount),
+      deposit: stringToNumber(deposit) || 0,
+      amount: stringToNumber(amount),
       init_date: new Date(initDate.split("/").reverse().join("-")),
       end_date: new Date(endDate.split("/").reverse().join("-")),
       observations,
