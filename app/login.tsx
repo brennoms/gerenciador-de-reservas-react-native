@@ -62,7 +62,7 @@ export default function LoginScreen() {
           secureTextEntry={!showPassword}
           autoComplete="password"
           textContentType="password"
-          className="bg-white p-4 rounded-xl mb-6 border border-gray-300"
+          className="bg-white p-4 rounded-xl mb-6 border border-gray-300 text-black"
         />
         <TouchableOpacity
           onPress={() => setShowPassword(!showPassword)}

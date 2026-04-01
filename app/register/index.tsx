@@ -68,7 +68,7 @@ export default function RegisterScreen() {
         value={pass}
         onChangeText={setPass}
         secureTextEntry
-        className="bg-white p-4 rounded-xl mb-4 border border-gray-300"
+        className="bg-white p-4 rounded-xl mb-4 border border-gray-300 text-black"
       />
 
       <TextInput
@@ -77,7 +77,7 @@ export default function RegisterScreen() {
         value={confirmpass}
         onChangeText={setConfirmpass}
         secureTextEntry
-        className="bg-white p-4 rounded-xl mb-6 border border-gray-300"
+        className="bg-white p-4 rounded-xl mb-6 border border-gray-300 text-black"
       />
 
       <TouchableOpacity
