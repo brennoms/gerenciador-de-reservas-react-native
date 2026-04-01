@@ -76,6 +76,7 @@ export default function AddProperty() {
 
       <TextInput
         placeholder="Nome do imóvel"
+        placeholderTextColor="gray"
         value={name}
         onChangeText={setName}
         className="border border-gray-300 rounded-lg p-3 mb-4"
@@ -83,6 +84,7 @@ export default function AddProperty() {
 
       <TextInput
         placeholder="Endereço"
+        placeholderTextColor="gray"
         value={address}
         onChangeText={setAddress}
         className="border border-gray-300 rounded-lg p-3 mb-6"

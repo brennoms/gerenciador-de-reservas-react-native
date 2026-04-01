@@ -155,6 +155,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Nome do cliente"
+        placeholderTextColor="gray"
         value={name}
         onChangeText={setName}
         className="border border-gray-300 rounded-lg p-3 mb-4 mt-4"
@@ -162,6 +163,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Contato"
+        placeholderTextColor="gray"
         value={contact}
         onChangeText={setContact}
         className="border border-gray-300 rounded-lg p-3 mb-4"
@@ -169,6 +171,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Valor total"
+        placeholderTextColor="gray"
         value={amount}
         onChangeText={setAmount}
         keyboardType="numeric"
@@ -177,6 +180,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Sinal (opcional)"
+        placeholderTextColor="gray"
         value={deposit}
         onChangeText={setDeposit}
         keyboardType="numeric"
@@ -185,6 +189,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Data início (DD/MM/AAAA)"
+        placeholderTextColor="gray"
         keyboardType="numeric"
         value={initDate}
         onChangeText={(text) => setInitDate(formatDate(text))}
@@ -193,6 +198,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Data fim (DD/MM/AAAA)"
+        placeholderTextColor="gray"
         keyboardType="numeric"
         value={endDate}
         onChangeText={(text) => setEndDate(formatDate(text))}
@@ -201,6 +207,7 @@ export default function EditReservation() {
 
       <TextInput
         placeholder="Observações"
+        placeholderTextColor="gray"
         value={observations}
         onChangeText={setObservations}
         multiline

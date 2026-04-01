@@ -44,6 +44,7 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Nome"
+        placeholderTextColor="gray"
         value={name}
         onChangeText={setName}
         className="bg-white p-4 rounded-xl mb-4 border border-gray-300"
@@ -51,6 +52,7 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Email"
+        placeholderTextColor="gray"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -62,6 +64,7 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Senha"
+        placeholderTextColor="gray"
         value={pass}
         onChangeText={setPass}
         secureTextEntry
@@ -70,6 +73,7 @@ export default function RegisterScreen() {
 
       <TextInput
         placeholder="Confirmar senha"
+        placeholderTextColor="gray"
         value={confirmpass}
         onChangeText={setConfirmpass}
         secureTextEntry
